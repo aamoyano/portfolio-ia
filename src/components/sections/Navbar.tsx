@@ -11,13 +11,14 @@ import { Container } from "../ui/Container";
 
 interface NavbarProps {
   nav: Content["nav"];
+  a11y: Content["a11y"];
   initials: string;
   /** Ruta del CV, o null si todavía no está en /public */
   cvHref: string | null;
   cvFileName: string;
 }
 
-export function Navbar({ nav, initials, cvHref, cvFileName }: NavbarProps) {
+export function Navbar({ nav, a11y, initials, cvHref, cvFileName }: NavbarProps) {
   const ids = useMemo(() => nav.links.map((link) => link.id), [nav.links]);
   const active = useActiveSection(ids);
   const [open, setOpen] = useState(false);
@@ -79,7 +80,7 @@ export function Navbar({ nav, initials, cvHref, cvFileName }: NavbarProps) {
           <span className="text-accent">.</span>
         </a>
 
-        <nav aria-label="Principal" className="hidden md:block">
+        <nav aria-label={a11y.mainNav} className="hidden md:block">
           <ul className="flex items-center gap-1">
             {nav.links.map((link) => {
               const isActive = active === link.id;
@@ -138,7 +139,7 @@ export function Navbar({ nav, initials, cvHref, cvFileName }: NavbarProps) {
         {open && (
           <motion.nav
             id="mobile-menu"
-            aria-label="Principal"
+            aria-label={a11y.mainNav}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "calc(100dvh - 4rem)" }}
             exit={{ opacity: 0, height: 0 }}

@@ -175,6 +175,15 @@ export interface Content {
   footer: {
     text: string;
   };
+
+  /** Textos solo para lectores de pantalla y atributos aria */
+  a11y: {
+    skipToContent: string;
+    mainNav: string;
+    opensNewTab: string;
+    technologies: string;
+    projectImageAlt: string;
+  };
 }
 
 export type SectionId = "sobre-mi" | "proyectos" | "stack" | "trayectoria" | "contacto";

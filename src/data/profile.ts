@@ -313,6 +313,14 @@ const es: Content = {
   footer: {
     text: "© 2026 Antonio Álvarez Moyano · Hecho con Next.js e IA",
   },
+
+  a11y: {
+    skipToContent: "Saltar al contenido",
+    mainNav: "Navegación principal",
+    opensNewTab: "se abre en una pestaña nueva",
+    technologies: "Tecnologías",
+    projectImageAlt: "Captura del proyecto",
+  },
 };
 
 /* ------------------------------------------------------------------ */
