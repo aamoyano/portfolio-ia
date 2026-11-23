@@ -41,7 +41,7 @@ export default function Home() {
         cvFileName={cv.split("/").pop() ?? "cv.pdf"}
       />
       <main className="overflow-x-clip">
-        <Hero content={content} cvHref={cvHref} chatEnabled={chatEnabled} />
+        <Hero content={content} chatEnabled={chatEnabled} />
         <Projects projects={content.projects} a11y={content.a11y} items={projects} />
         <Stack stack={content.stack} />
         <Timeline timeline={content.timeline} />

@@ -96,11 +96,12 @@ const es: Content = {
   hero: {
     greeting: "Hola, soy",
     subtitle: "IA y Big Data · Automatización y agentes",
+    intro: "IA y Big Data · Pregúntame lo que quieras sobre mi perfil",
     tagline:
       "Construyo soluciones con datos e inteligencia artificial, con la base de alguien que lleva años poniendo webs en producción.",
     ctaPrimary: "Ver proyectos",
     ctaSecondary: "Descargar CV",
-    scrollLabel: "Bajar a Proyectos",
+    scrollLabel: "Ver el resto de la web",
   },
 
   chat: {
@@ -117,6 +118,9 @@ const es: Content = {
       "¿Por qué contratarle?",
     ],
     inputLabel: "Escribe tu pregunta sobre Antonio",
+    followUpPlaceholder: "Escribe otra pregunta…",
+    close: "Volver a la web",
+    resume: "Continuar la conversación",
     sendLabel: "Enviar pregunta",
     typing: "Escribiendo…",
     disclaimer: "Respuestas generadas por IA a partir de mi perfil. Pueden contener errores.",

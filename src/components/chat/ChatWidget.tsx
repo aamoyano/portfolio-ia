@@ -1,11 +1,12 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUp, RotateCcw, Sparkles } from "lucide-react";
-import { useEffect, useId, useRef, useState } from "react";
+import { ArrowUp, MessageCircle, Sparkles } from "lucide-react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import type { Content } from "@/data/types";
 import { CHAT_LIMITS, type ChatErrorCode, type ChatMessage } from "@/lib/chat/types";
-import { cn } from "@/lib/utils";
+import { ChatPanel, SuggestionList } from "./ChatPanel";
 
 interface ChatWidgetProps {
   chat: Content["chat"];
@@ -14,10 +15,10 @@ interface ChatWidgetProps {
 }
 
 /**
- * Asistente de IA del hero.
+ * Asistente de IA: protagonista de la pantalla inicial.
  *
- * - La barra de vidrio es el campo de texto; al enviar se abre debajo
- *   el panel con la conversación.
+ * - En el hero se ve la barra de pregunta y las preguntas de ejemplo.
+ * - Al preguntar, la conversación se abre a pantalla completa (ChatPanel).
  * - Las respuestas llegan en streaming desde /api/chat.
  * - Si el chat está desactivado, la barra muestra el aviso "Próximamente".
  */
@@ -26,35 +27,30 @@ export function ChatWidget({ chat, enabled }: ChatWidgetProps) {
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
+  // El portal solo se monta tras la primera interacción (nunca en el HTML del servidor)
+  const [portalReady, setPortalReady] = useState(false);
   const [showNotice, setShowNotice] = useState(false);
 
   const inputId = useId();
   const noticeId = useId();
   const abortRef = useRef<AbortController | null>(null);
-  const logRef = useRef<HTMLDivElement>(null);
-
-  const hasConversation = messages.length > 0;
-  const errorTexts: Record<ChatErrorCode, string> = {
-    invalid: chat.errors.generic,
-    unavailable: chat.errors.generic,
-    rate_limited: chat.errors.rateLimited,
-    too_long: chat.errors.tooLong,
-  };
 
   // Cancela la petición en curso si el componente se desmonta
   useEffect(() => () => abortRef.current?.abort(), []);
-
-  // Mantiene visible el final de la conversación mientras llega el texto
-  useEffect(() => {
-    const log = logRef.current;
-    if (log) log.scrollTop = log.scrollHeight;
-  }, [messages]);
 
   useEffect(() => {
     if (!showNotice) return;
     const timeout = setTimeout(() => setShowNotice(false), 4500);
     return () => clearTimeout(timeout);
   }, [showNotice]);
+
+  const openPanel = () => {
+    setPortalReady(true);
+    setOpen(true);
+  };
+
+  const close = useCallback(() => setOpen(false), []);
 
   async function send(text: string) {
     const question = text.trim();
@@ -63,6 +59,8 @@ export function ChatWidget({ chat, enabled }: ChatWidgetProps) {
       setShowNotice(true);
       return;
     }
+
+    openPanel();
     if (question.length > CHAT_LIMITS.maxMessageLength) {
       setError(chat.errors.tooLong);
       return;
@@ -86,6 +84,13 @@ export function ChatWidget({ chat, enabled }: ChatWidgetProps) {
       setMessages(history.slice(0, -1));
       setInput(question);
       setError(message);
+    };
+
+    const errorTexts: Record<ChatErrorCode, string> = {
+      invalid: chat.errors.generic,
+      unavailable: chat.errors.generic,
+      rate_limited: chat.errors.rateLimited,
+      too_long: chat.errors.tooLong,
     };
 
     try {
@@ -124,18 +129,22 @@ export function ChatWidget({ chat, enabled }: ChatWidgetProps) {
     abortRef.current?.abort();
     setMessages([]);
     setError(null);
+    setInput("");
     setStreaming(false);
   }
 
+  const hasConversation = messages.length > 0;
+
   return (
-    <div className="text-left">
-      {/* Barra de pregunta */}
+    // Mientras la conversación está abierta, la barra del hero se oculta para que no se transparente
+    <div className={open ? "invisible" : undefined}>
+      {/* Barra de pregunta del hero */}
       <form
         onSubmit={(event) => {
           event.preventDefault();
           void send(input);
         }}
-        className="glass group flex h-16 w-full items-center gap-3 rounded-full pl-5 pr-2 transition-shadow focus-within:shadow-[inset_0_1px_0_rgb(255_255_255/0.7),0_18px_50px_-14px_rgb(15_20_45/0.5)]"
+        className="glass mx-auto flex h-16 w-full max-w-2xl items-center gap-3 rounded-full pl-5 pr-2 text-left transition-shadow focus-within:shadow-[inset_0_1px_0_rgb(255_255_255/0.7),0_18px_50px_-14px_rgb(15_20_45/0.5)] sm:h-[4.25rem]"
       >
         <Sparkles className="h-5 w-5 shrink-0 text-peach" aria-hidden />
         <label htmlFor={inputId} className="sr-only">
@@ -143,7 +152,7 @@ export function ChatWidget({ chat, enabled }: ChatWidgetProps) {
         </label>
         <input
           id={inputId}
-          value={input}
+          value={open ? "" : input}
           onChange={(event) => setInput(event.target.value)}
           onFocus={() => !enabled && setShowNotice(true)}
           readOnly={!enabled}
@@ -151,7 +160,7 @@ export function ChatWidget({ chat, enabled }: ChatWidgetProps) {
           placeholder={chat.placeholder}
           autoComplete="off"
           aria-describedby={showNotice ? noticeId : undefined}
-          className="min-w-0 flex-1 bg-transparent text-base text-fg placeholder:text-muted focus:outline-none"
+          className="min-w-0 flex-1 bg-transparent text-base text-fg placeholder:text-muted focus:outline-none sm:text-[17px]"
           style={{ textShadow: "none" }}
         />
         {!enabled && (
@@ -179,7 +188,7 @@ export function ChatWidget({ chat, enabled }: ChatWidgetProps) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.25 }}
-              className="glass mt-3 rounded-2xl px-4 py-3 text-sm text-fg"
+              className="glass mx-auto mt-3 max-w-2xl rounded-2xl px-4 py-3 text-sm text-fg"
             >
               {chat.comingSoon}
             </motion.p>
@@ -187,90 +196,42 @@ export function ChatWidget({ chat, enabled }: ChatWidgetProps) {
         </AnimatePresence>
       </div>
 
-      {/* Conversación */}
-      <AnimatePresence>
-        {hasConversation && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="glass mt-3 overflow-hidden rounded-3xl"
+      {/* Preguntas de ejemplo, o volver a la conversación si ya hay una */}
+      {hasConversation ? (
+        <div className="mt-5 flex justify-center">
+          <button
+            type="button"
+            onClick={openPanel}
+            className="glass glass-hover inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm text-fg"
           >
-            <div
-              ref={logRef}
-              role="log"
-              aria-live="polite"
-              className="max-h-[min(22rem,45svh)] space-y-4 overflow-y-auto px-5 py-5"
-            >
-              {messages.map((message, index) => (
-                <div key={index} className={cn("flex", message.role === "user" && "justify-end")}>
-                  <span className="sr-only">{message.role === "user" ? chat.you : chat.assistant}: </span>
-                  {message.role === "user" ? (
-                    <p className="max-w-[85%] rounded-2xl rounded-br-md bg-white/20 px-4 py-2.5 text-[15px] text-fg shadow-[inset_0_1px_0_rgb(255_255_255/0.35)]">
-                      {message.content}
-                    </p>
-                  ) : message.content ? (
-                    <p className="max-w-[92%] whitespace-pre-line text-[15px] leading-relaxed text-fg">
-                      {message.content}
-                    </p>
-                  ) : (
-                    <p className="flex items-center gap-1.5 py-2" aria-label={chat.typing}>
-                      {[0, 1, 2].map((dot) => (
-                        <span
-                          key={dot}
-                          aria-hidden
-                          className="h-1.5 w-1.5 animate-bounce rounded-full bg-white/80"
-                          style={{ animationDelay: `${dot * 0.15}s` }}
-                        />
-                      ))}
-                    </p>
-                  )}
-                </div>
-              ))}
-            </div>
+            <MessageCircle className="h-4 w-4" aria-hidden />
+            {chat.resume}
+          </button>
+        </div>
+      ) : (
+        <SuggestionList chat={chat} onSend={(question) => void send(question)} className="mt-5" />
+      )}
 
-            <div className="flex items-center justify-between gap-3 border-t border-white/15 px-5 py-2.5">
-              <p className="text-[11px] text-faint">{chat.disclaimer}</p>
-              <button
-                type="button"
-                onClick={reset}
-                className="inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-xs text-muted transition-colors hover:bg-white/15 hover:text-fg"
-              >
-                <RotateCcw className="h-3 w-3" aria-hidden />
-                {chat.reset}
-              </button>
-            </div>
-          </motion.div>
+      {/* Conversación a pantalla completa */}
+      {portalReady &&
+        createPortal(
+          <AnimatePresence>
+            {open && (
+              <ChatPanel
+                chat={chat}
+                messages={messages}
+                input={input}
+                streaming={streaming}
+                error={error}
+                onInputChange={setInput}
+                onSend={(text) => void send(text)}
+                onReset={reset}
+                onClose={close}
+              />
+            )}
+          </AnimatePresence>,
+          document.body,
         )}
-      </AnimatePresence>
-
-      {/* Error */}
-      {error && (
-        <p role="alert" className="glass mt-3 rounded-2xl px-4 py-3 text-sm text-fg">
-          {error}
-        </p>
-      )}
-
-      {/* Preguntas de ejemplo: solo antes de empezar la conversación */}
-      {!hasConversation && (
-        <>
-          <p className="sr-only">{chat.suggestionsLabel}</p>
-          <ul className="mt-4 flex flex-wrap justify-center gap-2">
-            {chat.suggestions.map((question) => (
-              <li key={question}>
-                <button
-                  type="button"
-                  onClick={() => void send(question)}
-                  className="rounded-full border border-line bg-white/10 px-3.5 py-1.5 text-xs text-fg backdrop-blur-md transition-colors hover:bg-white/20"
-                >
-                  {question}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
     </div>
   );
 }

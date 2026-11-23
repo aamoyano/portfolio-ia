@@ -116,6 +116,8 @@ export interface Content {
   hero: {
     greeting: string;
     subtitle: string;
+    /** Línea bajo el saludo, encima del chat */
+    intro: string;
     tagline: string;
     ctaPrimary: string;
     ctaSecondary: string;
@@ -131,6 +133,9 @@ export interface Content {
     suggestionsLabel: string;
     suggestions: string[];
     inputLabel: string;
+    followUpPlaceholder: string;
+    close: string;
+    resume: string;
     sendLabel: string;
     typing: string;
     disclaimer: string;

@@ -17,11 +17,24 @@ interface NavbarProps {
   cvFileName: string;
 }
 
-/** Navbar flotante en forma de píldora de vidrio. */
+/**
+ * Navbar flotante en forma de píldora de vidrio.
+ * Al cargar no se ve (la pantalla inicial es solo el chat):
+ * aparece al bajar por la página.
+ */
 export function Navbar({ nav, a11y, initials, cvHref, cvFileName }: NavbarProps) {
   const ids = useMemo(() => nav.links.map((link) => link.id), [nav.links]);
   const active = useActiveSection(ids);
   const [open, setOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
+
+  // Se muestra cuando se ha bajado más de media pantalla
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.5);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Menú móvil: se cierra con Escape
   useEffect(() => {
@@ -47,7 +60,13 @@ export function Navbar({ nav, a11y, initials, cvHref, cvFileName }: NavbarProps)
   );
 
   return (
-    <header className="fixed inset-x-0 top-4 z-50 px-4">
+    <header
+      inert={!visible && !open}
+      className={cn(
+        "fixed inset-x-0 top-4 z-50 px-4 transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+        visible || open ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-24 opacity-0",
+      )}
+    >
       <div className="glass mx-auto flex h-14 max-w-[820px] items-center justify-between gap-4 rounded-full pl-6 pr-2 md:h-12 md:max-w-[640px] md:pl-5 md:pr-1.5">
         <a
           href="#inicio"
