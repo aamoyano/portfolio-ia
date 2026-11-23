@@ -49,9 +49,9 @@ export function ChatWidget({ chat, enabled }: ChatWidgetProps) {
       />
       <div className="relative rounded-[21px] bg-surface/90 p-4 backdrop-blur-xl sm:p-5">
         {/* Cabecera */}
-        <div className="mb-4 flex items-center justify-between gap-3">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <span className="bg-gradient-accent grid h-9 w-9 place-items-center rounded-xl text-white">
+            <span className="bg-gradient-accent grid h-9 w-9 shrink-0 place-items-center rounded-xl text-white">
               <Bot className="h-[18px] w-[18px]" aria-hidden />
             </span>
             <div className="leading-tight">

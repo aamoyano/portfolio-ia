@@ -37,7 +37,7 @@ export default function Home() {
         cvHref={cvHref}
         cvFileName={cv.split("/").pop() ?? "cv.pdf"}
       />
-      <main>
+      <main className="overflow-x-clip">
         <Hero content={content} cvHref={cvHref} />
         <About about={content.about} photoSrc={photoSrc} />
         <Projects projects={content.projects} a11y={content.a11y} items={projects} />

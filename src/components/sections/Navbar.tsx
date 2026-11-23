@@ -64,7 +64,9 @@ export function Navbar({ nav, a11y, initials, cvHref, cvFileName }: NavbarProps)
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-300",
-        scrolled || open
+        open
+          ? "border-line bg-bg/95 backdrop-blur-xl"
+          : scrolled
           ? "border-line bg-bg/70 backdrop-blur-xl backdrop-saturate-150"
           : "border-transparent bg-transparent",
       )}

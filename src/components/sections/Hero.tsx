@@ -49,10 +49,10 @@ export function Hero({ content, cvHref }: HeroProps) {
             </h1>
 
             <p
-              className="animate-fade-up mt-7 inline-flex items-center gap-3 font-display text-lg font-medium text-fg sm:text-xl"
+              className="animate-fade-up mt-7 flex items-start gap-3 font-display text-lg font-medium text-fg sm:text-xl"
               style={delay(0.2)}
             >
-              <span aria-hidden className="animate-pulse-soft h-2 w-2 rounded-full bg-cyan" />
+              <span aria-hidden className="animate-pulse-soft mt-[0.6em] h-2 w-2 shrink-0 rounded-full bg-cyan" />
               {hero.subtitle}
             </p>
 
