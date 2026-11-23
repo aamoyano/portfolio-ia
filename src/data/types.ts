@@ -201,6 +201,29 @@ export interface Content {
     text: string;
   };
 
+  /**
+   * Información que solo lee el chatbot (no se muestra en la web).
+   * Las reglas sobre cómo usarla están en `src/lib/chat/system-prompt.ts`.
+   */
+  assistant: {
+    /** Por qué da el salto a la IA */
+    motivation: string;
+    strengths: string[];
+    /** Qué busca y en qué condiciones */
+    workPreferences: string[];
+    skills: {
+      /** Tecnologías principales */
+      main: string[];
+      /** Tecnologías que también conoce bien */
+      solid: string[];
+      /** Tecnologías que está aprendiendo */
+      learning: string[];
+    };
+    certifications: string;
+    /** Temas que el bot solo cuenta si se los preguntan explícitamente */
+    onlyIfAsked: { topic: string; answer: string }[];
+  };
+
   /** Textos solo para lectores de pantalla y atributos aria */
   a11y: {
     skipToContent: string;

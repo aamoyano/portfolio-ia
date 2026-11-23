@@ -1,12 +1,15 @@
 import type { IconType } from "react-icons";
+import { LuWorkflow } from "react-icons/lu";
 import { RiOpenaiFill } from "react-icons/ri";
 import {
-  SiApachespark,
   SiClaude,
+  SiCss,
   SiDocker,
   SiGit,
   SiGooglegemini,
+  SiHtml5,
   SiJavascript,
+  SiLaravel,
   SiLangchain,
   SiModelcontextprotocol,
   SiMongodb,
@@ -17,7 +20,7 @@ import {
   SiPhp,
   SiPython,
   SiReact,
-  SiScikitlearn,
+  SiTailwindcss,
   SiWordpress,
 } from "react-icons/si";
 import { TbDatabaseSearch, TbSql } from "react-icons/tb";
@@ -35,17 +38,20 @@ export const techIcons = {
   gemini: SiGooglegemini,
   rag: TbDatabaseSearch,
   mcp: SiModelcontextprotocol,
+  n8n: LuWorkflow,
   sql: TbSql,
   pandas: SiPandas,
   numpy: SiNumpy,
-  sklearn: SiScikitlearn,
-  spark: SiApachespark,
   mongodb: SiMongodb,
   docker: SiDocker,
+  html: SiHtml5,
+  css: SiCss,
   javascript: SiJavascript,
   react: SiReact,
   nextjs: SiNextdotjs,
   php: SiPhp,
+  laravel: SiLaravel,
+  tailwind: SiTailwindcss,
   mysql: SiMysql,
   wordpress: SiWordpress,
   git: SiGit,

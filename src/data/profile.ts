@@ -75,7 +75,7 @@ const es: Content = {
     availability: "Disponibilidad inmediata",
     languages: [
       { name: "Español", level: "Nativo" },
-      { name: "Inglés", level: "Intermedio" },
+      { name: "Inglés", level: "Intermedio, conversacional (lo usa en reuniones con clientes; certificado oficial en preparación)" },
     ],
   },
 
@@ -138,8 +138,8 @@ const es: Content = {
     eyebrow: "Sobre mí",
     title: "Del código en producción a los datos y la IA",
     paragraphs: [
-      "Empecé en el marketing digital, leyendo métricas de campañas, y de ahí pasé a programar: más de un año desarrollando y manteniendo webs WordPress en producción para empresas reales, donde lo importante es que todo funcione hoy y no se rompa mañana.",
-      "Ahora estoy dando el salto a la Inteligencia Artificial y el Big Data con un máster oficial. Me atrae la parte práctica: automatizar procesos, construir agentes con LLMs y convertir datos en decisiones útiles para un negocio.",
+      "Empecé en el marketing digital, analizando resultados de campañas publicitarias, y de ahí pasé al desarrollo web: más de un año creando webs para clientes finales, reuniéndome con ellos para entender sus necesidades y proponerles soluciones.",
+      "Ahora estoy dando el salto a la Inteligencia Artificial y el Big Data con un máster oficial. Me interesan especialmente los datos, las automatizaciones y el desarrollo de aplicaciones con IA.",
     ],
     highlights: [
       { value: "+1 año", label: "con webs en producción" },
@@ -166,7 +166,7 @@ const es: Content = {
         title: "Portfolio con asistente de IA",
         description:
           "Esta web: un portfolio con un chatbot que responde sobre mi perfil usando un LLM.",
-        tags: ["Next.js", "TypeScript", "LLM API", "RAG"],
+        tags: ["Next.js", "TypeScript", "LLM API"],
         status: "in-progress",
         image: "/projects/portfolio-ia.jpg",
         demo: "",
@@ -176,7 +176,7 @@ const es: Content = {
         slug: "reservas-ia",
         title: "Automatización de reservas con IA",
         description:
-          "Agente con LLM que atiende consultas y gestiona la disponibilidad de una casa rural.",
+          "Web para gestionar las reservas de una casa rural familiar, con un chatbot con IA que resuelve dudas.",
         tags: ["Python", "LLMs", "Agentes", "SQL"],
         status: "in-progress",
         image: "/projects/reservas-ia.jpg",
@@ -203,6 +203,7 @@ const es: Content = {
           { name: "Gemini API", icon: "gemini" },
           { name: "RAG", icon: "rag" },
           { name: "MCP", icon: "mcp" },
+          { name: "n8n", icon: "n8n" },
         ],
       },
       {
@@ -213,8 +214,6 @@ const es: Content = {
           { name: "SQL", icon: "sql" },
           { name: "Pandas", icon: "pandas" },
           { name: "NumPy", icon: "numpy" },
-          { name: "Scikit-learn", icon: "sklearn" },
-          { name: "Spark", icon: "spark" },
           { name: "MongoDB", icon: "mongodb" },
           { name: "Docker", icon: "docker" },
         ],
@@ -224,10 +223,14 @@ const es: Content = {
         title: "Web",
         description: "La base: interfaces, back-end y webs en producción.",
         items: [
+          { name: "HTML", icon: "html" },
+          { name: "CSS", icon: "css" },
           { name: "JavaScript", icon: "javascript" },
           { name: "React", icon: "react" },
           { name: "Next.js", icon: "nextjs" },
+          { name: "Tailwind", icon: "tailwind" },
           { name: "PHP", icon: "php" },
+          { name: "Laravel", icon: "laravel" },
           { name: "MySQL", icon: "mysql" },
           { name: "WordPress", icon: "wordpress" },
           { name: "Git", icon: "git" },
@@ -279,7 +282,7 @@ const es: Content = {
         start: "2026-09",
         period: "2026 – 2027",
         description:
-          "Formación oficial en aprendizaje automático, Big Data e inteligencia artificial aplicada.",
+          "Formación presencial de tarde. Aprende, entre otras materias, agentes de IA y gestión de bases de datos.",
         location: "Madrid",
         current: true,
       },
@@ -290,7 +293,7 @@ const es: Content = {
         start: "2025-08",
         period: "ago 2025 – sep 2026",
         description:
-          "WordPress en producción: mejoras visuales, adaptación responsive y resolución de incidencias.",
+          "Proyectos web para clientes finales, en remoto y como autónomo: reuniones con los clientes, análisis de sus necesidades y propuesta de soluciones. Webs WordPress en producción: mejoras visuales, adaptación responsive y resolución de incidencias. Lo compaginaba con APPSUR.",
       },
       {
         type: "work",
@@ -299,7 +302,7 @@ const es: Content = {
         start: "2025-12",
         period: "dic 2025 – jul 2026",
         description:
-          "Desarrollo y mantenimiento de webs en WordPress con foco en rendimiento y experiencia de usuario.",
+          "Diseño y desarrollo web en WordPress, con foco en rendimiento y experiencia de usuario, y reuniones con clientes (algunas en inglés).",
       },
       {
         type: "work",
@@ -307,7 +310,8 @@ const es: Content = {
         organization: "Nogomet Comunicación",
         start: "2025-04",
         period: "abr – jun 2025",
-        description: "Desarrollo de webs en WordPress y soporte técnico a clientes.",
+        description:
+          "Contrato de prácticas del ciclo de Desarrollo de Aplicaciones Web: soluciones digitales y diseño web para empresas en WordPress, y soporte técnico.",
       },
       {
         type: "education",
@@ -316,7 +320,7 @@ const es: Content = {
         start: "2023-09",
         period: "2023 – 2025",
         description:
-          "Desarrollo front-end y back-end: JavaScript, PHP, bases de datos SQL y despliegue de aplicaciones.",
+          "Desarrollo front-end y back-end: HTML, CSS, JavaScript, Tailwind, PHP, Laravel, SQL y Java.",
         location: "Córdoba",
       },
       {
@@ -326,7 +330,7 @@ const es: Content = {
         start: "2023-04",
         period: "abr – jun 2023",
         description:
-          "Informes de rendimiento de campañas: CTR, CPC, impresiones y conversiones.",
+          "Prácticas del ciclo de Marketing y Publicidad: informes de resultados de publicidad (CTR, CPC, impresiones y conversiones), seguimiento de campañas y verificación y supervisión de resultados.",
         location: "Córdoba",
       },
       {
@@ -336,7 +340,7 @@ const es: Content = {
         start: "2021-09",
         period: "2021 – 2023",
         description:
-          "Estrategia digital, investigación de mercados y análisis de campañas.",
+          "Marketing digital, publicidad y análisis de campañas.",
         location: "Córdoba",
       },
     ],
@@ -355,6 +359,56 @@ const es: Content = {
 
   footer: {
     text: "© 2026 Antonio Álvarez Moyano · Hecho con Next.js e IA",
+  },
+
+  assistant: {
+    motivation:
+      "Da el salto a la IA para mantenerse actualizado en un sector que avanza muy rápido y poder desarrollar nuevas soluciones digitales. Le atraen especialmente los datos y las automatizaciones, y está convencido de que la IA puede ser una herramienta de gran utilidad para las empresas.",
+    strengths: [
+      "Autonomía: ha trabajado en remoto como autónomo, gestionando proyectos con clientes finales.",
+      "Aprende rápido y se adapta con facilidad a nuevos entornos.",
+      "Buenas relaciones sociales y trato con clientes: reuniones para entender sus necesidades y proponer soluciones, también en inglés.",
+      "Compromiso y muchas ganas de desarrollar su carrera profesional.",
+    ],
+    workPreferences: [
+      "Busca prácticas o un puesto junior; ambas opciones le interesan.",
+      "Se adapta a cualquier rol relacionado con la IA y el Big Data; le gustan especialmente las automatizaciones, el desarrollo de aplicaciones con IA y los datos.",
+      "Modalidad: presencial, híbrido o remoto.",
+      "Ubicación: Madrid y localidades cercanas; no se trasladaría lejos.",
+      "Horario: disponibilidad completa por las mañanas y parcial por la tarde (aproximadamente hasta las 16:00), porque el máster es presencial de tarde.",
+      "Incorporación inmediata.",
+      "Prácticas: no necesitan convenio con la Cámara de Comercio, aunque es posible si la empresa lo prefiere. No exige una duración concreta y está abierto a hablar de la remuneración.",
+    ],
+    skills: {
+      main: ["Python", "APIs de LLMs (OpenAI, Claude, Gemini)", "MCP", "JavaScript", "HTML", "CSS", "PHP"],
+      solid: [
+        "React",
+        "Next.js",
+        "Tailwind",
+        "Laravel",
+        "WordPress con Elementor Pro y plugins técnicos",
+        "MySQL",
+        "SQL",
+        "Git",
+        "SEO básico",
+        "Hosting básico",
+        "Java",
+      ],
+      learning: ["LangChain", "Pandas", "NumPy", "n8n", "MongoDB", "Docker"],
+    },
+    certifications:
+      "Por ahora no tiene certificaciones adicionales, pero está preparándolas, incluido el certificado oficial de inglés.",
+    onlyIfAsked: [
+      {
+        topic: "Aficiones",
+        answer: "Le gusta jugar al ajedrez, tocar el piano y la naturaleza.",
+      },
+      {
+        topic: "Cómo se ha hecho este portfolio",
+        answer:
+          "Lo ha desarrollado él con ayuda de herramientas de IA, que ha usado para corregir errores y avanzar más rápido en el desarrollo.",
+      },
+    ],
   },
 
   a11y: {
