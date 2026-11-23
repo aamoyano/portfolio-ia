@@ -5,7 +5,6 @@ import { Download, Menu, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import type { Content } from "@/data/types";
 import { useActiveSection } from "@/hooks/useActiveSection";
-import { getScrollRoot } from "@/lib/scroll-root";
 import { cn } from "@/lib/utils";
 import { buttonClasses } from "../ui/Button";
 
@@ -31,12 +30,10 @@ export function Navbar({ nav, a11y, initials, cvHref, cvFileName }: NavbarProps)
 
   // Se muestra cuando se ha bajado más de media pantalla
   useEffect(() => {
-    const scroller = getScrollRoot();
-    if (!scroller) return;
-    const onScroll = () => setVisible(scroller.scrollTop > window.innerHeight * 0.5);
+    const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.5);
     onScroll();
-    scroller.addEventListener("scroll", onScroll, { passive: true });
-    return () => scroller.removeEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   // Menú móvil: se cierra con Escape
@@ -66,7 +63,7 @@ export function Navbar({ nav, a11y, initials, cvHref, cvFileName }: NavbarProps)
     <header
       inert={!visible && !open}
       className={cn(
-        "absolute inset-x-0 top-[calc(1rem+env(safe-area-inset-top))] z-50 px-4 transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+        "fixed inset-x-0 top-4 z-50 px-4 transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
         visible || open ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-24 opacity-0",
       )}
     >

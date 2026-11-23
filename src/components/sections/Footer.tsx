@@ -4,7 +4,7 @@ import { Container } from "../ui/Container";
 export function Footer({ footer }: { footer: Content["footer"] }) {
   return (
     <footer>
-      <Container className="pb-[calc(2rem+env(safe-area-inset-bottom))] text-center">
+      <Container className="pb-8 text-center">
         <p className="text-sm text-muted">{footer.text}</p>
       </Container>
     </footer>

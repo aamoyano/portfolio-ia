@@ -10,7 +10,6 @@ import { siteConfig } from "@/data/profile";
 import { getContent } from "@/i18n";
 import { publicFileExists } from "@/lib/assets";
 import { getChatProvider } from "@/lib/chat/providers";
-import { SCROLL_ROOT_ID } from "@/lib/scroll-root";
 
 export default function Home() {
   const content = getContent();
@@ -30,7 +29,7 @@ export default function Home() {
       <Background />
       <a
         href="#proyectos"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-bg"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-bg"
       >
         {content.a11y.skipToContent}
       </a>
@@ -41,17 +40,14 @@ export default function Home() {
         cvHref={cvHref}
         cvFileName={cv.split("/").pop() ?? "cv.pdf"}
       />
-      {/* La página hace scroll aquí dentro, no en la ventana (ver src/lib/scroll-root.ts) */}
-      <div id={SCROLL_ROOT_ID} className="scroll-root">
-        <main>
-          <Hero content={content} chatEnabled={chatEnabled} />
-          <Projects projects={content.projects} a11y={content.a11y} items={projects} />
-          <Stack stack={content.stack} />
-          <Timeline timeline={content.timeline} />
-          <Contact contact={content.contact} />
-        </main>
-        <Footer footer={content.footer} />
-      </div>
+      <main className="overflow-x-clip">
+        <Hero content={content} chatEnabled={chatEnabled} />
+        <Projects projects={content.projects} a11y={content.a11y} items={projects} />
+        <Stack stack={content.stack} />
+        <Timeline timeline={content.timeline} />
+        <Contact contact={content.contact} />
+      </main>
+      <Footer footer={content.footer} />
     </>
   );
 }

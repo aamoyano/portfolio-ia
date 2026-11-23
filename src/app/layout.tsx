@@ -65,7 +65,7 @@ const personJsonLd = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang={defaultLocale} className={`${inter.variable} ${spaceGrotesk.variable} antialiased`}>
-      <body>
+      <body className="min-h-screen overflow-x-clip">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c") }}

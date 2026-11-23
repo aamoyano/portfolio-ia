@@ -5,7 +5,6 @@ import { ArrowUp, RotateCcw, Sparkles, X } from "lucide-react";
 import { useEffect, useId, useRef } from "react";
 import type { Content } from "@/data/types";
 import { CHAT_LIMITS, type ChatMessage } from "@/lib/chat/types";
-import { getScrollRoot } from "@/lib/scroll-root";
 import { cn } from "@/lib/utils";
 import { MessageContent } from "./MessageContent";
 
@@ -43,13 +42,12 @@ export function ChatPanel({
 
   // Bloquea el scroll de la web y cierra con Escape
   useEffect(() => {
-    const scroller = getScrollRoot() ?? document.body;
-    const previous = scroller.style.overflowY;
-    scroller.style.overflowY = "hidden";
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     const onKey = (event: KeyboardEvent) => event.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
     return () => {
-      scroller.style.overflowY = previous;
+      document.body.style.overflow = previous;
       window.removeEventListener("keydown", onKey);
     };
   }, [onClose]);
@@ -76,7 +74,7 @@ export function ChatPanel({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.25 }}
-      className="absolute left-0 top-0 z-[80] flex h-[100dvh] w-full justify-center bg-[rgb(20_25_55/0.35)] backdrop-blur-xl"
+      className="fixed inset-0 z-[80] flex justify-center bg-[rgb(20_25_55/0.35)] backdrop-blur-xl"
     >
       <motion.div
         initial={{ opacity: 0, y: 16, scale: 0.98 }}
