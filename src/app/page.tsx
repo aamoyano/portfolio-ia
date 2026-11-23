@@ -9,6 +9,7 @@ import { Timeline } from "@/components/sections/Timeline";
 import { siteConfig } from "@/data/profile";
 import { getContent } from "@/i18n";
 import { publicFileExists } from "@/lib/assets";
+import { getChatProvider } from "@/lib/chat/providers";
 
 export default function Home() {
   const content = getContent();
@@ -16,8 +17,8 @@ export default function Home() {
 
   // Archivos que añadirás tú en /public: si no existen, no se muestran
   const cvHref = publicFileExists(cv) ? cv : null;
-  // El chat solo se activa si está encendido en profile.ts y hay API key en el servidor
-  const chatEnabled = siteConfig.chatEnabled && Boolean(process.env.ANTHROPIC_API_KEY);
+  // El chat solo se activa si está encendido en profile.ts y hay una API key (OpenRouter o Anthropic)
+  const chatEnabled = siteConfig.chatEnabled && getChatProvider() !== null;
   const projects = content.projects.items.map((project) => ({
     ...project,
     imageSrc: publicFileExists(project.image) ? project.image : null,

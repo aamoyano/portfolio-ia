@@ -28,7 +28,7 @@ export interface SiteConfig {
     background: string;
   };
   /**
-   * Interruptor del chatbot. En `false` (o sin ANTHROPIC_API_KEY en el servidor)
+   * Interruptor del chatbot. En `false` (o sin OPENROUTER_API_KEY / ANTHROPIC_API_KEY)
    * se muestra el placeholder "Próximamente".
    */
   chatEnabled: boolean;

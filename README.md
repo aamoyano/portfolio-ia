@@ -3,7 +3,7 @@
 Web personal *one-page* de **Antonio Álvarez Moyano**, perfil junior en **Inteligencia Artificial y Big Data** (Madrid).
 Diseño minimalista *liquid glass* sobre una foto de atardecer fija, *mobile-first* y preparada para incorporar un **chatbot de IA que responde preguntas sobre mi perfil**.
 
-> Estado: publicada en español, con chatbot de IA (necesita `ANTHROPIC_API_KEY`).
+> Estado: publicada en español, con chatbot de IA (necesita `OPENROUTER_API_KEY` o `ANTHROPIC_API_KEY`).
 
 ## Stack
 
@@ -133,22 +133,24 @@ Copia `.env.example` como `.env.local` y rellena los valores. En Vercel se confi
 
 | Variable | Para qué |
 | --- | --- |
-| `ANTHROPIC_API_KEY` | Activa el chatbot. Sin ella, el chat muestra "Próximamente". |
+| `OPENROUTER_API_KEY` o `ANTHROPIC_API_KEY` | Activa el chatbot (basta una; si están las dos, se usa OpenRouter). Sin ninguna, el chat muestra "Próximamente". |
+| `CHAT_MODEL` | Opcional: cambia el modelo (por defecto Claude Opus 5.5). |
 | `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` | Límite de uso compartido entre instancias (recomendado en producción). |
 | `NEXT_PUBLIC_SITE_URL` | Tu dominio propio, para metadatos y sitemap. |
 
 ## Chatbot
 
-El asistente del hero responde preguntas sobre mi perfil usando **Claude** (API de Anthropic).
+El asistente del hero responde preguntas sobre mi perfil usando **Claude**, a través de **OpenRouter** o de la API de Anthropic.
 
 ```
-ChatWidget ──POST /api/chat──▶ límite por IP ──▶ Claude (perfil en el system prompt) ──streaming──▶ ChatWidget
+ChatWidget ──POST /api/chat──▶ límite por IP ──▶ OpenRouter / Anthropic (perfil en el system prompt) ──streaming──▶ ChatWidget
 ```
 
 | Pieza | Archivo |
 | --- | --- |
 | Interfaz (barra, conversación, chips) | `src/components/chat/ChatWidget.tsx` |
 | Endpoint con streaming | `src/app/api/chat/route.ts` |
+| Proveedores y modelo | `src/lib/chat/providers.ts` |
 | Instrucciones + perfil | `src/lib/chat/system-prompt.ts` (usa `buildKnowledgeBase()` de `src/lib/knowledge.ts`) |
 | Límite de uso (10/min y 30/día por IP) | `src/lib/chat/rate-limit.ts` |
 
@@ -157,20 +159,23 @@ para abaratar las preguntas repetidas. Si cambias tu perfil, el chatbot lo sabe 
 
 ### Ponerlo en marcha
 
-1. Crea una API key en [console.anthropic.com](https://console.anthropic.com) y fija un **límite de gasto mensual** en *Settings → Limits*.
-2. Añádela como `ANTHROPIC_API_KEY` en `.env.local` (local) y en Vercel (producción).
+1. Crea una API key en [openrouter.ai](https://openrouter.ai) (*Keys*) y ponle un **límite de crédito**.
+   También vale una clave de [console.anthropic.com](https://console.anthropic.com) como `ANTHROPIC_API_KEY`.
+2. Añádela como `OPENROUTER_API_KEY` en `.env.local` (local) y en Vercel (producción).
 3. Para producción, crea una base **Upstash Redis** gratis (Vercel → *Storage* → *Upstash*) y añade sus dos variables.
 4. Para apagarlo en cualquier momento: `siteConfig.chatEnabled = false` en `profile.ts`.
 
 ### Modelo y coste
 
-Se configura en `CHAT_MODEL` dentro de `route.ts`. Con unos 3.000 tokens de entrada y 300 de salida por pregunta:
+Se cambia con la variable `CHAT_MODEL`. Con unos 3.000 tokens de entrada y 300 de salida por pregunta (mismos precios en OpenRouter y Anthropic):
 
 | Modelo | Coste aprox. por pregunta |
 | --- | --- |
-| `claude-opus-5-5` (actual) | ~0,018 $ |
-| `claude-sonnet-5-5` | ~0,009 $ |
-| `claude-haiku-5-5` | ~0,0005 $ |
+| Claude Opus 5.5 (`anthropic/claude-opus-5.5`, por defecto) | ~0,018 $ |
+| Claude Sonnet 5.5 (`anthropic/claude-sonnet-5.5`) | ~0,009 $ |
+| Claude Haiku 5.5 (`anthropic/claude-haiku-5.5`) | ~0,0005 $ |
+
+Con Anthropic directo, los nombres son `claude-opus-5-5`, `claude-sonnet-5-5` y `claude-haiku-5-5`.
 
 ### Fase 2 · RAG con embeddings (pendiente)
 

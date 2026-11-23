@@ -2,27 +2,18 @@
  * Endpoint del chatbot: POST /api/chat
  *
  * Recibe el historial de la conversación, comprueba el límite de uso
- * y responde con el texto de Claude en streaming (text/plain).
- * Los errores se devuelven como JSON `{ error: ChatErrorCode }`.
+ * y responde con el texto del modelo en streaming (text/plain).
+ * Los errores previos se devuelven como JSON `{ error: ChatErrorCode }`.
  *
- * Fase 1: el perfil completo va en el system prompt (ver
- * `src/lib/chat/system-prompt.ts`). Fase 2 (RAG): ver README.
+ * El proveedor (OpenRouter o Anthropic) y el modelo se eligen en
+ * `src/lib/chat/providers.ts` según las variables de entorno.
  */
 
-import Anthropic from "@anthropic-ai/sdk";
 import { siteConfig } from "@/data/profile";
 import { getContent } from "@/i18n";
+import { getChatProvider, ProviderError, streamAnswer } from "@/lib/chat/providers";
 import { checkRateLimit, getClientIp } from "@/lib/chat/rate-limit";
-import { SYSTEM_PROMPT } from "@/lib/chat/system-prompt";
 import { CHAT_LIMITS, type ChatErrorCode, type ChatMessage } from "@/lib/chat/types";
-
-/**
- * Modelo de Claude. Para abaratar el chat puedes cambiarlo por
- * "claude-sonnet-5-5" o "claude-haiku-5-5" (ver README → Chatbot).
- */
-const CHAT_MODEL = "claude-opus-5-5";
-
-const client = new Anthropic();
 
 function errorResponse(error: ChatErrorCode, status: number) {
   return Response.json({ error }, { status });
@@ -46,7 +37,8 @@ function parseMessages(body: unknown): ChatMessage[] | "invalid" | "too_long" {
 }
 
 export async function POST(request: Request) {
-  if (!siteConfig.chatEnabled || !process.env.ANTHROPIC_API_KEY) {
+  const provider = getChatProvider();
+  if (!siteConfig.chatEnabled || !provider) {
     return errorResponse("unavailable", 503);
   }
 
@@ -67,41 +59,23 @@ export async function POST(request: Request) {
 
   const { errors } = getContent().chat;
   const encoder = new TextEncoder();
-
-  const stream = client.beta.messages.stream(
-    {
-      model: CHAT_MODEL,
-      max_tokens: 1024, // respuestas cortas a propósito
-      // En un chat sencillo, el esfuerzo bajo responde rápido y gasta menos
-      output_config: { effort: "low" },
-      // El perfil es igual en todas las peticiones: se cachea y abarata cada pregunta
-      system: [{ type: "text", text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" } }],
-      messages,
-      // Si el modelo rechaza una pregunta por seguridad, otro modelo responde en su lugar
-      betas: ["server-side-fallback-2026-07-01"],
-      fallbacks: "default",
-    },
-    // Si el visitante cierra la página, se corta la generación (y el gasto)
-    { signal: request.signal },
-  );
+  // Si el visitante cierra la página, se corta la generación (y el gasto)
+  const abort = new AbortController();
+  request.signal.addEventListener("abort", () => abort.abort());
 
   const responseBody = new ReadableStream<Uint8Array>({
     async start(controller) {
       let sentText = false;
       try {
-        for await (const event of stream) {
-          if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
-            sentText = true;
-            controller.enqueue(encoder.encode(event.delta.text));
-          }
+        for await (const text of streamAnswer(provider, messages, abort.signal)) {
+          sentText = true;
+          controller.enqueue(encoder.encode(text));
         }
-        const final = await stream.finalMessage();
-        if (final.stop_reason === "refusal" && !sentText) {
-          controller.enqueue(encoder.encode(errors.generic));
-        }
+        // Respuesta vacía (p. ej. pregunta rechazada por el modelo)
+        if (!sentText) controller.enqueue(encoder.encode(errors.generic));
       } catch (error) {
-        if (!request.signal.aborted) {
-          console.error("[api/chat]", error instanceof Anthropic.APIError ? `${error.status} ${error.message}` : error);
+        if (!abort.signal.aborted) {
+          console.error("[api/chat]", error instanceof ProviderError ? error.message : error);
           controller.enqueue(encoder.encode(sentText ? `\n\n${errors.generic}` : errors.generic));
         }
       } finally {
@@ -109,7 +83,7 @@ export async function POST(request: Request) {
       }
     },
     cancel() {
-      stream.abort();
+      abort.abort();
     },
   });
 
