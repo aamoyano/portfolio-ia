@@ -8,12 +8,10 @@
   /* Azul profundo del lago: texto oscuro sobre fondos claros */
   --color-bg: #1c2347;
   /*
-   * Colores del borde superior e inferior de la foto, tal y como se ve en un
-   * iPhone (con el velo de Background.tsx). Safari en iOS 26 pinta la barra de
-   * estado y la zona de la barra inferior de un color sólido: con estos tonos
-   * parece que la foto continúa. Si cambias la foto de fondo, recalcúlalos.
+   * Tono del borde inferior de la foto (con el velo de Background.tsx).
+   * Es el color de respaldo de html/body: se ve mientras carga la foto o
+   * al estirar la página. Si cambias la foto de fondo, ajústalo.
    */
-  --color-edge-top: #aa7c57;
   --color-edge-bottom: #95785a;
   --color-fg: #ffffff;
   --color-muted: rgba(255, 255, 255, 0.8);
@@ -57,16 +55,23 @@
 }
 
 @layer base {
+  /*
+   * La ventana no hace scroll: lo hace #scroll-root (ver .scroll-root).
+   * Así la foto de fondo no necesita position: fixed y Safari iOS 26 la
+   * deja ver detrás de la barra de estado y de la barra inferior.
+   */
   html {
-    /* Safari iOS usa este color para la zona de la barra inferior y al estirar la página */
+    /* Color de respaldo con el tono del borde de la foto */
     background-color: var(--color-edge-bottom);
     color-scheme: dark;
-    scroll-behavior: smooth;
-    scroll-padding-top: 6rem;
+    height: 100%;
+    overflow: hidden;
     -webkit-tap-highlight-color: transparent;
   }
 
   body {
+    position: relative;
+    height: 100%;
     background-color: var(--color-edge-bottom);
     color: var(--color-fg);
     font-family: var(--font-sans);
@@ -167,8 +172,22 @@
   }
 }
 
+/* Contenedor que hace scroll en lugar de la ventana */
+.scroll-root {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 100dvh;
+  overflow-x: clip;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scroll-behavior: smooth;
+  /* Compensa la navbar flotante (y la barra de estado del iPhone) al saltar a una sección */
+  scroll-padding-top: calc(6rem + env(safe-area-inset-top));
+}
+
 @media (prefers-reduced-motion: reduce) {
-  html {
+  .scroll-root {
     scroll-behavior: auto;
   }
   *,

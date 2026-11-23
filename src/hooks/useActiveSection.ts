@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { getScrollRoot } from "@/lib/scroll-root";
 
 /**
  * Devuelve el id de la sección que ocupa la franja central de la pantalla,
@@ -26,15 +27,16 @@ export function useActiveSection(ids: readonly string[]) {
     );
 
     // Al volver al hero no hay ninguna sección activa
+    const scroller = getScrollRoot() ?? document.documentElement;
     const onScroll = () => {
-      if (window.scrollY < window.innerHeight * 0.4) setActive(null);
+      if (scroller.scrollTop < window.innerHeight * 0.4) setActive(null);
     };
 
     elements.forEach((el) => observer.observe(el));
-    window.addEventListener("scroll", onScroll, { passive: true });
+    scroller.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       observer.disconnect();
-      window.removeEventListener("scroll", onScroll);
+      scroller.removeEventListener("scroll", onScroll);
     };
   }, [ids]);
 
