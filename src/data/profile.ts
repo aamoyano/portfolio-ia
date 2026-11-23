@@ -103,6 +103,8 @@ const es: Content = {
   },
 
   chat: {
+    title: "Asistente de Antonio",
+    description: "IA · responde sobre mi perfil",
     placeholder: "Pregúntale a mi IA sobre mí…",
     badge: "Próximamente",
     comingSoon:

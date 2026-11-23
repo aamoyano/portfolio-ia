@@ -47,3 +47,6 @@ next-env.d.ts
 
 # prompt original del proyecto (notas locales)
 prompt-portfolio-claude-code.md
+
+# configuración local de Claude Code
+.claude/

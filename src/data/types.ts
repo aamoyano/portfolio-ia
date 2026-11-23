@@ -118,6 +118,8 @@ export interface Content {
   };
 
   chat: {
+    title: string;
+    description: string;
     placeholder: string;
     badge: string;
     comingSoon: string;
