@@ -33,9 +33,9 @@ export function CopyEmailButton({
   }
 
   return (
-    <Button variant="secondary" size="lg" onClick={handleCopy}>
+    <Button variant="glass" size="lg" onClick={handleCopy}>
       {copied ? (
-        <Check className="h-4 w-4 text-emerald-400" aria-hidden />
+        <Check className="h-4 w-4 text-teal" aria-hidden />
       ) : (
         <Copy className="h-4 w-4" aria-hidden />
       )}

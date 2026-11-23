@@ -1,22 +1,19 @@
 import { cn } from "@/lib/utils";
 
-type Variant = "primary" | "secondary" | "ghost";
+type Variant = "primary" | "glass";
 type Size = "md" | "lg";
 
 const base =
-  "relative inline-flex select-none items-center justify-center gap-2 rounded-full font-medium transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50";
+  "relative inline-flex select-none items-center justify-center gap-2 rounded-full font-medium transition-all duration-300 hover:-translate-y-0.5 disabled:pointer-events-none disabled:opacity-60 aria-disabled:pointer-events-none aria-disabled:opacity-60";
 
 const variants: Record<Variant, string> = {
-  primary:
-    "bg-gradient-accent text-white shadow-[0_0_0_1px_rgba(255,255,255,0.12)_inset,0_8px_30px_-8px_rgba(139,92,246,0.6)] hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.2)_inset,0_12px_40px_-8px_rgba(34,211,238,0.55)]",
-  secondary:
-    "border border-line-strong bg-white/[0.02] text-fg hover:-translate-y-0.5 hover:border-accent/60 hover:bg-accent/10",
-  ghost: "text-muted hover:bg-white/5 hover:text-fg",
+  primary: "glass-solid hover:bg-white",
+  glass: "glass glass-hover text-fg",
 };
 
 const sizes: Record<Size, string> = {
   md: "h-10 px-5 text-sm",
-  lg: "h-12 px-7 text-base",
+  lg: "h-12 px-7 text-[15px]",
 };
 
 interface CommonProps {

@@ -1,4 +1,4 @@
-import { About } from "@/components/sections/About";
+import { Background } from "@/components/Background";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
 import { Hero } from "@/components/sections/Hero";
@@ -12,11 +12,10 @@ import { publicFileExists } from "@/lib/assets";
 
 export default function Home() {
   const content = getContent();
-  const { cv, photo } = siteConfig.assets;
+  const { cv } = siteConfig.assets;
 
-  // Archivos que añadirás tú en /public: si no existen, se muestra un placeholder
+  // Archivos que añadirás tú en /public: si no existen, no se muestran
   const cvHref = publicFileExists(cv) ? cv : null;
-  const photoSrc = publicFileExists(photo) ? photo : null;
   const projects = content.projects.items.map((project) => ({
     ...project,
     imageSrc: publicFileExists(project.image) ? project.image : null,
@@ -24,9 +23,10 @@ export default function Home() {
 
   return (
     <>
+      <Background />
       <a
-        href="#sobre-mi"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-accent focus:px-4 focus:py-2 focus:text-white"
+        href="#proyectos"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-bg"
       >
         {content.a11y.skipToContent}
       </a>
@@ -39,7 +39,6 @@ export default function Home() {
       />
       <main className="overflow-x-clip">
         <Hero content={content} cvHref={cvHref} />
-        <About about={content.about} photoSrc={photoSrc} />
         <Projects projects={content.projects} a11y={content.a11y} items={projects} />
         <Stack stack={content.stack} />
         <Timeline timeline={content.timeline} />

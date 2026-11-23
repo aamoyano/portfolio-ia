@@ -13,8 +13,8 @@ export function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className={cn("relative py-24 sm:py-32", className)}>
-      <Container>{children}</Container>
+    <section id={id} aria-labelledby={`${id}-title`} className={cn("relative py-20 sm:py-28", className)}>
+      <Container className="max-w-[980px]">{children}</Container>
     </section>
   );
 }

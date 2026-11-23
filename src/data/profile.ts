@@ -34,6 +34,8 @@ export const siteConfig: SiteConfig = {
   assets: {
     photo: "/foto-antonio.jpg",
     cv: "/cv-antonio-alvarez.pdf",
+    // Otras opciones en /public/backgrounds: atardecer-playa.jpg y atardecer-palmeras.jpg
+    background: "/backgrounds/atardecer-lago.jpg",
   },
   chatEnabled: false,
 };
@@ -79,7 +81,6 @@ const es: Content = {
 
   nav: {
     links: [
-      { id: "sobre-mi", label: "Sobre mí" },
       { id: "proyectos", label: "Proyectos" },
       { id: "stack", label: "Stack" },
       { id: "trayectoria", label: "Trayectoria" },
@@ -99,7 +100,7 @@ const es: Content = {
       "Construyo soluciones con datos e inteligencia artificial, con la base de alguien que lleva años poniendo webs en producción.",
     ctaPrimary: "Ver proyectos",
     ctaSecondary: "Descargar CV",
-    scrollLabel: "Bajar a la sección Sobre mí",
+    scrollLabel: "Bajar a Proyectos",
   },
 
   chat: {
@@ -228,6 +229,32 @@ const es: Content = {
       education: "Formación",
     },
     currentLabel: "En curso",
+    summary: [
+      {
+        type: "education",
+        title: "Máster en IA y Big Data",
+        place: "Cámara de Comercio de Madrid",
+        period: "2026 – 2027",
+      },
+      {
+        type: "work",
+        title: "Web Developer",
+        place: "Xpandex · APPSUR · Nogomet",
+        period: "2025 – 2026",
+      },
+      {
+        type: "education",
+        title: "Desarrollo de Aplicaciones Web",
+        place: "MEDAC Córdoba",
+        period: "2023 – 2025",
+      },
+      {
+        type: "work",
+        title: "Marketing Digital",
+        place: "Diario Córdoba · MEDAC Córdoba",
+        period: "2021 – 2023",
+      },
+    ],
     items: [
       {
         type: "education",

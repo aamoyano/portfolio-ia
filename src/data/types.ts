@@ -24,6 +24,8 @@ export interface SiteConfig {
   assets: {
     photo: string;
     cv: string;
+    /** Foto de fondo fija de toda la web */
+    background: string;
   };
   /** Interruptor del chatbot. En `false` se muestra el placeholder "Próximamente". */
   chatEnabled: boolean;
@@ -158,6 +160,9 @@ export interface Content {
     subtitle: string;
     typeLabels: Record<TimelineType, string>;
     currentLabel: string;
+    /** Versión resumida que se muestra en la web (3-4 líneas) */
+    summary: { title: string; place: string; period: string; type: TimelineType }[];
+    /** Detalle completo: base de conocimiento del chatbot */
     items: TimelineItem[];
   };
 
