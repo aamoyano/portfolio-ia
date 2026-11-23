@@ -1,0 +1,151 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Tema: oscuro, un único acento violeta y degradado puntual a cian
+   ------------------------------------------------------------------ */
+@theme {
+  --color-bg: #0b0b0f;
+  --color-surface: #13131a;
+  --color-surface-2: #1a1a23;
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-line-strong: rgba(255, 255, 255, 0.16);
+  --color-fg: #f5f5f7;
+  --color-muted: #a1a1aa;
+  --color-accent: #8b5cf6;
+  --color-accent-soft: #a78bfa;
+  --color-cyan: #22d3ee;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), var(--font-inter), ui-sans-serif, sans-serif;
+
+  --animate-aurora: aurora 18s ease-in-out infinite alternate;
+  --animate-scroll-dot: scroll-dot 1.8s ease-in-out infinite;
+
+  @keyframes aurora {
+    0% {
+      transform: translate3d(-10%, -6%, 0) rotate(0deg) scale(1);
+    }
+    50% {
+      transform: translate3d(8%, 4%, 0) rotate(8deg) scale(1.1);
+    }
+    100% {
+      transform: translate3d(-4%, 8%, 0) rotate(-6deg) scale(1.05);
+    }
+  }
+
+  @keyframes scroll-dot {
+    0% {
+      transform: translateY(0);
+      opacity: 0;
+    }
+    30% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(14px);
+      opacity: 0;
+    }
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+    /* Compensa la navbar fija al saltar a una sección */
+    scroll-padding-top: 5rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: rgb(139 92 246 / 0.35);
+    color: var(--color-fg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent-soft);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+@layer utilities {
+  /* Texto con el degradado violeta → cian (uso puntual) */
+  .text-gradient {
+    background-image: linear-gradient(100deg, var(--color-accent-soft) 10%, var(--color-cyan) 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .bg-gradient-accent {
+    background-image: linear-gradient(100deg, var(--color-accent) 0%, #6d5df6 45%, var(--color-cyan) 120%);
+  }
+
+  /* Rejilla de puntos tenue para el hero */
+  .bg-dots {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: 26px 26px;
+  }
+
+  /* Borde con brillo que sigue al ratón (usa --mx / --my) */
+  .glow-border {
+    position: relative;
+    isolation: isolate;
+  }
+  .glow-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: radial-gradient(
+      320px circle at var(--mx, 50%) var(--my, 50%),
+      rgb(139 92 246 / 0.7),
+      rgb(34 211 238 / 0.25) 40%,
+      transparent 70%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .glow-border:hover::before,
+  .glow-border:focus-within::before {
+    opacity: 1;
+  }
+}
+
+/* Accesibilidad: sin animaciones si el usuario lo pide */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
