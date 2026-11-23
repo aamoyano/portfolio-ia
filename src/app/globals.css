@@ -5,8 +5,16 @@
    de vidrio translúcido con reflejos de luz en los bordes.
    ------------------------------------------------------------------ */
 @theme {
-  /* Azul profundo del lago: color de respaldo mientras carga la foto */
+  /* Azul profundo del lago: texto oscuro sobre fondos claros */
   --color-bg: #1c2347;
+  /*
+   * Colores del borde superior e inferior de la foto, tal y como se ve en un
+   * iPhone (con el velo de Background.tsx). Safari en iOS 26 pinta la barra de
+   * estado y la zona de la barra inferior de un color sólido: con estos tonos
+   * parece que la foto continúa. Si cambias la foto de fondo, recalcúlalos.
+   */
+  --color-edge-top: #aa7c57;
+  --color-edge-bottom: #95785a;
   --color-fg: #ffffff;
   --color-muted: rgba(255, 255, 255, 0.8);
   --color-faint: rgba(255, 255, 255, 0.62);
@@ -50,6 +58,8 @@
 
 @layer base {
   html {
+    /* Safari iOS usa este color para la zona de la barra inferior y al estirar la página */
+    background-color: var(--color-edge-bottom);
     color-scheme: dark;
     scroll-behavior: smooth;
     scroll-padding-top: 6rem;
@@ -57,7 +67,7 @@
   }
 
   body {
-    background-color: var(--color-bg);
+    background-color: var(--color-edge-bottom);
     color: var(--color-fg);
     font-family: var(--font-sans);
     text-rendering: optimizeLegibility;
