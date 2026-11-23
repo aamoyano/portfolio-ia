@@ -6,8 +6,9 @@ import { siteConfig } from "@/data/profile";
  * Para cambiarla, edita `siteConfig.assets.background` en profile.ts.
  */
 export function Background() {
+  // 100lvh: en Safari iOS cubre también la zona detrás de las barras (inset-0 solo mide el viewport pequeño)
   return (
-    <div aria-hidden className="fixed inset-0 -z-10 overflow-hidden">
+    <div aria-hidden className="fixed left-0 top-0 -z-10 h-[100lvh] w-full overflow-hidden">
       <Image
         src={siteConfig.assets.background}
         alt=""

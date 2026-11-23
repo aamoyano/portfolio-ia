@@ -45,8 +45,9 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#1C2347",
   colorScheme: "dark",
+  // En iPhone, la foto de fondo ocupa también la zona de la barra de estado y del indicador de inicio
+  viewportFit: "cover",
 };
 
 /** Datos estructurados (schema.org) para que Google entienda quién eres */
