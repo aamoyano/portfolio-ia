@@ -2,6 +2,7 @@
 
 export type ChatRole = "user" | "assistant";
 
+/** Mensaje tal y como viaja entre el navegador y /api/chat */
 export interface ChatMessage {
   role: ChatRole;
   content: string;
@@ -11,9 +12,11 @@ export interface ChatRequest {
   messages: ChatMessage[];
 }
 
-export interface ChatResponse {
-  status: "coming-soon" | "ok" | "error";
-  reply: string;
+/** Errores: el endpoint responde JSON con este código; el éxito es texto en streaming. */
+export type ChatErrorCode = "invalid" | "too_long" | "rate_limited" | "unavailable";
+
+export interface ChatErrorResponse {
+  error: ChatErrorCode;
 }
 
 /** Límites básicos para no gastar tokens con entradas abusivas */

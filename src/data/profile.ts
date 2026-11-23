@@ -37,7 +37,7 @@ export const siteConfig: SiteConfig = {
     // Otras opciones en /public/backgrounds: atardecer-playa.jpg y atardecer-palmeras.jpg
     background: "/backgrounds/atardecer-lago.jpg",
   },
-  chatEnabled: false,
+  chatEnabled: true,
 };
 
 /* ------------------------------------------------------------------ */
@@ -116,6 +116,18 @@ const es: Content = {
       "¿Está disponible?",
       "¿Por qué contratarle?",
     ],
+    inputLabel: "Escribe tu pregunta sobre Antonio",
+    sendLabel: "Enviar pregunta",
+    typing: "Escribiendo…",
+    disclaimer: "Respuestas generadas por IA a partir de mi perfil. Pueden contener errores.",
+    reset: "Nueva conversación",
+    you: "Tú",
+    assistant: "Asistente",
+    errors: {
+      generic: "Ahora mismo no puedo responder. Inténtalo de nuevo en un momento o escríbeme desde la sección de contacto.",
+      rateLimited: "Has hecho muchas preguntas seguidas. Espera un poco antes de volver a intentarlo.",
+      tooLong: "El mensaje es demasiado largo. Prueba con una pregunta más corta.",
+    },
   },
 
   about: {

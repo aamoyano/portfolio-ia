@@ -27,7 +27,10 @@ export interface SiteConfig {
     /** Foto de fondo fija de toda la web */
     background: string;
   };
-  /** Interruptor del chatbot. En `false` se muestra el placeholder "Próximamente". */
+  /**
+   * Interruptor del chatbot. En `false` (o sin ANTHROPIC_API_KEY en el servidor)
+   * se muestra el placeholder "Próximamente".
+   */
   chatEnabled: boolean;
 }
 
@@ -127,6 +130,18 @@ export interface Content {
     comingSoon: string;
     suggestionsLabel: string;
     suggestions: string[];
+    inputLabel: string;
+    sendLabel: string;
+    typing: string;
+    disclaimer: string;
+    reset: string;
+    you: string;
+    assistant: string;
+    errors: {
+      generic: string;
+      rateLimited: string;
+      tooLong: string;
+    };
   };
 
   about: {

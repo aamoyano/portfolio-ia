@@ -3,7 +3,7 @@
 Web personal *one-page* de **Antonio Álvarez Moyano**, perfil junior en **Inteligencia Artificial y Big Data** (Madrid).
 Diseño minimalista *liquid glass* sobre una foto de atardecer fija, *mobile-first* y preparada para incorporar un **chatbot de IA que responde preguntas sobre mi perfil**.
 
-> Estado: primera versión publicada en español. El chatbot está maquetado como placeholder ("Próximamente").
+> Estado: publicada en español, con chatbot de IA (necesita `ANTHROPIC_API_KEY`).
 
 ## Stack
 
@@ -101,7 +101,7 @@ src/
 │  ├─ layout.tsx            # fuentes, metadatos SEO y datos estructurados
 │  ├─ page.tsx              # monta las secciones
 │  ├─ globals.css           # tema y clases .glass (vidrio líquido)
-│  ├─ api/chat/route.ts     # endpoint del chatbot (de momento "Próximamente")
+│  ├─ api/chat/route.ts     # endpoint del chatbot (streaming)
 │  ├─ opengraph-image.tsx   # imagen para compartir en redes
 │  ├─ twitter-image.tsx
 │  ├─ icon.tsx · apple-icon.tsx
@@ -116,7 +116,7 @@ src/
 │  └─ types.ts
 ├─ i18n/                    # idiomas (es activo, en preparado)
 ├─ hooks/                   # useActiveSection
-└─ lib/                     # knowledge.ts (base de conocimiento del chat), utilidades
+└─ lib/                     # knowledge.ts, chat/ (prompt, límite de uso, tipos), utilidades
 ```
 
 ## Idiomas
@@ -129,26 +129,50 @@ Los textos están agrupados por idioma en `content` dentro de `profile.ts`. Para
 
 ## Variables de entorno
 
-Copia `.env.example` como `.env.local`. De momento solo es útil `NEXT_PUBLIC_SITE_URL` (cuando tengas dominio propio).
-En Vercel se configuran en **Settings → Environment Variables**.
+Copia `.env.example` como `.env.local` y rellena los valores. En Vercel se configuran en **Settings → Environment Variables**.
 
-## Próximos pasos: el chatbot
+| Variable | Para qué |
+| --- | --- |
+| `ANTHROPIC_API_KEY` | Activa el chatbot. Sin ella, el chat muestra "Próximamente". |
+| `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` | Límite de uso compartido entre instancias (recomendado en producción). |
+| `NEXT_PUBLIC_SITE_URL` | Tu dominio propio, para metadatos y sitemap. |
 
-La interfaz (`ChatWidget`), el endpoint (`/api/chat`), los tipos (`src/lib/chat/types.ts`) y la base de conocimiento
-(`src/lib/knowledge.ts`, generada a partir de `profile.ts`) ya están preparados.
+## Chatbot
 
-### Fase 1 · Contexto en el prompt
+El asistente del hero responde preguntas sobre mi perfil usando **Claude** (API de Anthropic).
 
-1. `npm install @anthropic-ai/sdk` y añadir `ANTHROPIC_API_KEY` en Vercel.
-2. En `route.ts`, construir el *system prompt* con `buildKnowledgeBase()` e instrucciones claras:
-   responder solo sobre mí, en el idioma de la pregunta, sin inventar datos y remitiendo al email si no lo sabe.
-3. Devolver la respuesta en **streaming** y pintarla en el `ChatWidget` según llega.
-4. **Límite de uso** por IP (p. ej. Upstash Redis + `@upstash/ratelimit`), `max_tokens` bajo y tope de gasto en la consola del proveedor.
-5. Cambiar `siteConfig.chatEnabled` a `true` y activar los chips de preguntas de ejemplo.
+```
+ChatWidget ──POST /api/chat──▶ límite por IP ──▶ Claude (perfil en el system prompt) ──streaming──▶ ChatWidget
+```
 
-Con un perfil del tamaño de `profile.ts` esta fase es suficiente y barata.
+| Pieza | Archivo |
+| --- | --- |
+| Interfaz (barra, conversación, chips) | `src/components/chat/ChatWidget.tsx` |
+| Endpoint con streaming | `src/app/api/chat/route.ts` |
+| Instrucciones + perfil | `src/lib/chat/system-prompt.ts` (usa `buildKnowledgeBase()` de `src/lib/knowledge.ts`) |
+| Límite de uso (10/min y 30/día por IP) | `src/lib/chat/rate-limit.ts` |
 
-### Fase 2 · RAG con embeddings
+**Fase 1 · Contexto en el prompt (implementada).** Todo `profile.ts` va en el *system prompt*, con *prompt caching*
+para abaratar las preguntas repetidas. Si cambias tu perfil, el chatbot lo sabe en el siguiente despliegue.
+
+### Ponerlo en marcha
+
+1. Crea una API key en [console.anthropic.com](https://console.anthropic.com) y fija un **límite de gasto mensual** en *Settings → Limits*.
+2. Añádela como `ANTHROPIC_API_KEY` en `.env.local` (local) y en Vercel (producción).
+3. Para producción, crea una base **Upstash Redis** gratis (Vercel → *Storage* → *Upstash*) y añade sus dos variables.
+4. Para apagarlo en cualquier momento: `siteConfig.chatEnabled = false` en `profile.ts`.
+
+### Modelo y coste
+
+Se configura en `CHAT_MODEL` dentro de `route.ts`. Con unos 3.000 tokens de entrada y 300 de salida por pregunta:
+
+| Modelo | Coste aprox. por pregunta |
+| --- | --- |
+| `claude-opus-5-5` (actual) | ~0,018 $ |
+| `claude-sonnet-5-5` | ~0,009 $ |
+| `claude-haiku-5-5` | ~0,0005 $ |
+
+### Fase 2 · RAG con embeddings (pendiente)
 
 Cuando haya más contenido (artículos, documentación de proyectos, el CV completo):
 

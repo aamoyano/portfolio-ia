@@ -10,12 +10,14 @@ interface HeroProps {
   content: Content;
   /** Ruta del CV, o null si todavía no está en /public */
   cvHref: string | null;
+  /** Chat activo: interruptor en profile.ts + API key configurada */
+  chatEnabled: boolean;
 }
 
 /** Retardo escalonado para la entrada del hero (CSS, sin esperar a JS) */
 const delay = (seconds: number) => ({ animationDelay: `${seconds}s` });
 
-export function Hero({ content, cvHref }: HeroProps) {
+export function Hero({ content, cvHref, chatEnabled }: HeroProps) {
   const { hero, chat } = content;
 
   return (
@@ -38,7 +40,7 @@ export function Hero({ content, cvHref }: HeroProps) {
         </p>
 
         <div className="animate-fade-up mt-12 w-full max-w-xl" style={delay(0.3)}>
-          <ChatWidget chat={chat} enabled={siteConfig.chatEnabled} />
+          <ChatWidget chat={chat} enabled={chatEnabled} />
         </div>
 
         <div

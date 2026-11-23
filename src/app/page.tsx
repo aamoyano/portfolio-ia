@@ -16,6 +16,8 @@ export default function Home() {
 
   // Archivos que añadirás tú en /public: si no existen, no se muestran
   const cvHref = publicFileExists(cv) ? cv : null;
+  // El chat solo se activa si está encendido en profile.ts y hay API key en el servidor
+  const chatEnabled = siteConfig.chatEnabled && Boolean(process.env.ANTHROPIC_API_KEY);
   const projects = content.projects.items.map((project) => ({
     ...project,
     imageSrc: publicFileExists(project.image) ? project.image : null,
@@ -38,7 +40,7 @@ export default function Home() {
         cvFileName={cv.split("/").pop() ?? "cv.pdf"}
       />
       <main className="overflow-x-clip">
-        <Hero content={content} cvHref={cvHref} />
+        <Hero content={content} cvHref={cvHref} chatEnabled={chatEnabled} />
         <Projects projects={content.projects} a11y={content.a11y} items={projects} />
         <Stack stack={content.stack} />
         <Timeline timeline={content.timeline} />

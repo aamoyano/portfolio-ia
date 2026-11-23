@@ -1,65 +1,122 @@
 /**
  * Endpoint del chatbot: POST /api/chat
  *
- * ESTADO ACTUAL: devuelve siempre un mensaje fijo de "Próximamente".
+ * Recibe el historial de la conversación, comprueba el límite de uso
+ * y responde con el texto de Claude en streaming (text/plain).
+ * Los errores se devuelven como JSON `{ error: ChatErrorCode }`.
  *
- * PLAN DE IMPLEMENTACIÓN (ver README → Próximos pasos):
- *
- * 1) LLAMADA AL LLM
- *    - Instalar el SDK: `npm install @anthropic-ai/sdk` (u `openai`).
- *    - Construir el system prompt con `buildKnowledgeBase()` de
- *      `src/lib/knowledge.ts` + instrucciones: responder solo sobre
- *      Antonio, en el idioma del usuario, sin inventar datos y
- *      remitiendo al email si no sabe algo.
- *    - La API key se lee de `process.env.ANTHROPIC_API_KEY` (nunca en el cliente).
- *
- * 2) LÍMITE DE USO
- *    - Limitar peticiones por IP (p. ej. 10 por minuto y 50 al día)
- *      con Upstash Redis + @upstash/ratelimit, o Vercel KV.
- *    - Además de CHAT_LIMITS (longitud y nº de mensajes), fijar
- *      `max_tokens` bajo y un tope de gasto en la consola del proveedor.
- *
- * 3) STREAMING
- *    - Usar la API de streaming del SDK y devolver un `ReadableStream`
- *      (`new Response(stream, { headers: { "Content-Type": "text/event-stream" } })`).
- *    - El ChatWidget leerá el stream con `response.body.getReader()`
- *      y pintará el texto según llega.
+ * Fase 1: el perfil completo va en el system prompt (ver
+ * `src/lib/chat/system-prompt.ts`). Fase 2 (RAG): ver README.
  */
 
+import Anthropic from "@anthropic-ai/sdk";
 import { siteConfig } from "@/data/profile";
 import { getContent } from "@/i18n";
-import { CHAT_LIMITS, type ChatRequest, type ChatResponse } from "@/lib/chat/types";
+import { checkRateLimit, getClientIp } from "@/lib/chat/rate-limit";
+import { SYSTEM_PROMPT } from "@/lib/chat/system-prompt";
+import { CHAT_LIMITS, type ChatErrorCode, type ChatMessage } from "@/lib/chat/types";
+
+/**
+ * Modelo de Claude. Para abaratar el chat puedes cambiarlo por
+ * "claude-sonnet-5-5" o "claude-haiku-5-5" (ver README → Chatbot).
+ */
+const CHAT_MODEL = "claude-opus-5-5";
+
+const client = new Anthropic();
+
+function errorResponse(error: ChatErrorCode, status: number) {
+  return Response.json({ error }, { status });
+}
+
+/** Valida y limpia el historial: alterna user/assistant y termina en user. */
+function parseMessages(body: unknown): ChatMessage[] | "invalid" | "too_long" {
+  const raw = (body as { messages?: unknown })?.messages;
+  if (!Array.isArray(raw) || raw.length === 0 || raw.length > CHAT_LIMITS.maxMessages) return "invalid";
+
+  const messages: ChatMessage[] = [];
+  for (const [index, item] of raw.entries()) {
+    const role = (item as ChatMessage)?.role;
+    const content = (item as ChatMessage)?.content;
+    const expected = index % 2 === 0 ? "user" : "assistant";
+    if (role !== expected || typeof content !== "string" || !content.trim()) return "invalid";
+    if (content.length > CHAT_LIMITS.maxMessageLength * (role === "assistant" ? 4 : 1)) return "too_long";
+    messages.push({ role, content: content.trim() });
+  }
+  return messages.at(-1)?.role === "user" ? messages : "invalid";
+}
 
 export async function POST(request: Request) {
-  let body: ChatRequest;
+  if (!siteConfig.chatEnabled || !process.env.ANTHROPIC_API_KEY) {
+    return errorResponse("unavailable", 503);
+  }
+
+  let body: unknown;
   try {
-    body = (await request.json()) as ChatRequest;
+    body = await request.json();
   } catch {
-    return Response.json(
-      { status: "error", reply: "Petición no válida." } satisfies ChatResponse,
-      { status: 400 },
-    );
+    return errorResponse("invalid", 400);
   }
 
-  const messages = Array.isArray(body?.messages) ? body.messages : [];
-  const tooLong =
-    messages.length > CHAT_LIMITS.maxMessages ||
-    messages.some((m) => typeof m?.content !== "string" || m.content.length > CHAT_LIMITS.maxMessageLength);
+  const messages = parseMessages(body);
+  if (messages === "invalid") return errorResponse("invalid", 400);
+  if (messages === "too_long") return errorResponse("too_long", 413);
 
-  if (messages.length === 0 || tooLong) {
-    return Response.json(
-      { status: "error", reply: "El mensaje está vacío o es demasiado largo." } satisfies ChatResponse,
-      { status: 400 },
-    );
+  if (!(await checkRateLimit(getClientIp(request)))) {
+    return errorResponse("rate_limited", 429);
   }
 
-  if (siteConfig.chatEnabled) {
-    // TODO: aquí irá la llamada al LLM con límite de uso y streaming
-    // (ver el comentario al inicio del archivo).
-  }
+  const { errors } = getContent().chat;
+  const encoder = new TextEncoder();
 
-  return Response.json({
-    status: "coming-soon",
-    reply: getContent().chat.comingSoon,
-  } satisfies ChatResponse);
+  const stream = client.beta.messages.stream(
+    {
+      model: CHAT_MODEL,
+      max_tokens: 1024, // respuestas cortas a propósito
+      // En un chat sencillo, el esfuerzo bajo responde rápido y gasta menos
+      output_config: { effort: "low" },
+      // El perfil es igual en todas las peticiones: se cachea y abarata cada pregunta
+      system: [{ type: "text", text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" } }],
+      messages,
+      // Si el modelo rechaza una pregunta por seguridad, otro modelo responde en su lugar
+      betas: ["server-side-fallback-2026-07-01"],
+      fallbacks: "default",
+    },
+    // Si el visitante cierra la página, se corta la generación (y el gasto)
+    { signal: request.signal },
+  );
+
+  const responseBody = new ReadableStream<Uint8Array>({
+    async start(controller) {
+      let sentText = false;
+      try {
+        for await (const event of stream) {
+          if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
+            sentText = true;
+            controller.enqueue(encoder.encode(event.delta.text));
+          }
+        }
+        const final = await stream.finalMessage();
+        if (final.stop_reason === "refusal" && !sentText) {
+          controller.enqueue(encoder.encode(errors.generic));
+        }
+      } catch (error) {
+        if (!request.signal.aborted) {
+          console.error("[api/chat]", error instanceof Anthropic.APIError ? `${error.status} ${error.message}` : error);
+          controller.enqueue(encoder.encode(sentText ? `\n\n${errors.generic}` : errors.generic));
+        }
+      } finally {
+        controller.close();
+      }
+    },
+    cancel() {
+      stream.abort();
+    },
+  });
+
+  return new Response(responseBody, {
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+      "Cache-Control": "no-store",
+    },
+  });
 }
