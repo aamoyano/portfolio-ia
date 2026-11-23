@@ -361,6 +361,12 @@ const es: Content = {
   },
 
   assistant: {
+    experienceSummary: [
+      "Más de un año de experiencia profesional como desarrollador web (agosto 2025 – septiembre 2026).",
+      "Durante gran parte de ese tiempo compaginó dos empresas: Xpandex, como autónomo, y APPSUR.",
+      "Trabajó con clientes reales y webs en producción, desde la reunión inicial hasta la solución.",
+      "Antes hizo prácticas en desarrollo web (Nogomet Comunicación) y en marketing digital (Diario Córdoba).",
+    ],
     motivation:
       "Da el salto a la IA para mantenerse actualizado en un sector que avanza muy rápido y poder desarrollar nuevas soluciones digitales. Le atraen especialmente los datos y las automatizaciones, y está convencido de que la IA puede ser una herramienta de gran utilidad para las empresas.",
     strengths: [

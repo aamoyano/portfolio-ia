@@ -206,6 +206,8 @@ export interface Content {
    * Las reglas sobre cómo usarla están en `src/lib/chat/system-prompt.ts`.
    */
   assistant: {
+    /** Cómo responder a "¿cuánta experiencia tiene?" */
+    experienceSummary: string[];
     /** Por qué da el salto a la IA */
     motivation: string;
     strengths: string[];
