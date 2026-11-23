@@ -67,7 +67,8 @@
   }
 
   body {
-    background-color: var(--color-edge-bottom);
+    /* Sin color de fondo propio: se pintaría encima de la foto (capa con z-index negativo).
+       El color de respaldo lo pone html. */
     color: var(--color-fg);
     font-family: var(--font-sans);
     text-rendering: optimizeLegibility;
