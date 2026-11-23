@@ -72,7 +72,7 @@
   body {
     position: relative;
     height: 100%;
-    background-color: var(--color-edge-bottom);
+    /* Sin color de fondo propio: taparía la foto (que va en una capa con z-index negativo) */
     color: var(--color-fg);
     font-family: var(--font-sans);
     text-rendering: optimizeLegibility;
