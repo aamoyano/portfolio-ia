@@ -201,7 +201,6 @@ const es: Content = {
           { name: "OpenAI API", icon: "openai" },
           { name: "Claude API", icon: "claude" },
           { name: "Gemini API", icon: "gemini" },
-          { name: "RAG", icon: "rag" },
           { name: "MCP", icon: "mcp" },
           { name: "n8n", icon: "n8n" },
         ],

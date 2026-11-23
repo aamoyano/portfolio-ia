@@ -23,7 +23,7 @@ import {
   SiTailwindcss,
   SiWordpress,
 } from "react-icons/si";
-import { TbDatabaseSearch, TbSql } from "react-icons/tb";
+import { TbSql } from "react-icons/tb";
 
 /**
  * Iconos de tecnologías disponibles para el stack.
@@ -36,7 +36,6 @@ export const techIcons = {
   openai: RiOpenaiFill,
   claude: SiClaude,
   gemini: SiGooglegemini,
-  rag: TbDatabaseSearch,
   mcp: SiModelcontextprotocol,
   n8n: LuWorkflow,
   sql: TbSql,
