@@ -1,7 +1,7 @@
 # Portfolio · Antonio Álvarez Moyano
 
 Web personal *one-page* de **Antonio Álvarez Moyano**, perfil junior en **Inteligencia Artificial y Big Data** (Madrid).
-Diseño oscuro, moderno y *mobile-first*, preparada para incorporar un **chatbot de IA que responde preguntas sobre mi perfil**.
+Diseño minimalista *liquid glass* sobre una foto de atardecer fija, *mobile-first* y preparada para incorporar un **chatbot de IA que responde preguntas sobre mi perfil**.
 
 > Estado: primera versión publicada en español. El chatbot está maquetado como placeholder ("Próximamente").
 
@@ -41,10 +41,10 @@ Los componentes no tienen textos propios, así que no hace falta tocarlos.
 | --------------------------------------- | ----------------------------------------- |
 | Email, LinkedIn, GitHub                 | `siteConfig.email` / `siteConfig.links`   |
 | Textos del hero                         | `es.hero`                                 |
-| Texto de "Sobre mí" y datos destacados  | `es.about`                                |
+| Trayectoria resumida (4 líneas)         | `es.timeline.summary`                     |
 | Proyectos                               | `es.projects.items`                       |
 | Tecnologías del stack                   | `es.stack.groups`                         |
-| Formación y experiencia                 | `es.timeline.items`                       |
+| Formación y experiencia completas       | `es.timeline.items` (base del chatbot)    |
 | Título, descripción y keywords SEO      | `es.seo`                                  |
 
 ### Añadir un proyecto
@@ -76,16 +76,22 @@ Si necesitas un logo nuevo, impórtalo de `react-icons` y añádelo a ese mapa.
 
 ## Archivos que tienes que añadir
 
-Mientras no existan, la web muestra un placeholder elegante (y el botón de CV aparece como "CV próximamente"):
+Mientras no existan, simplemente no se muestran (el botón de CV aparece como "CV próximamente" en la navbar):
 
 | Archivo                          | Uso                                          |
 | -------------------------------- | -------------------------------------------- |
-| `public/foto-antonio.jpg`        | Foto de "Sobre mí" (vertical, 4:5, ~900 px de alto) |
 | `public/cv-antonio-alvarez.pdf`  | CV descargable desde la navbar y el hero     |
 | `public/projects/portfolio-ia.jpg` | Captura del proyecto "Portfolio con asistente de IA" (16:10) |
 | `public/projects/reservas-ia.jpg`  | Captura del proyecto "Automatización de reservas con IA" (16:10) |
 
 > La comprobación se hace al generar la página: después de añadir un archivo, reinicia `npm run dev` o vuelve a desplegar.
+
+## Fondo
+
+La foto fija de fondo se define en `siteConfig.assets.background`. Hay tres opciones en `public/backgrounds/`:
+`atardecer-lago.jpg` (la actual), `atardecer-playa.jpg` y `atardecer-palmeras.jpg`.
+
+El diseño oscuro anterior está guardado en la etiqueta de Git `diseno-oscuro` (`git checkout diseno-oscuro` para verlo).
 
 ## Estructura
 
@@ -94,15 +100,16 @@ src/
 ├─ app/
 │  ├─ layout.tsx            # fuentes, metadatos SEO y datos estructurados
 │  ├─ page.tsx              # monta las secciones
-│  ├─ globals.css           # tema (colores, animaciones, reduced-motion)
+│  ├─ globals.css           # tema y clases .glass (vidrio líquido)
 │  ├─ api/chat/route.ts     # endpoint del chatbot (de momento "Próximamente")
 │  ├─ opengraph-image.tsx   # imagen para compartir en redes
 │  ├─ twitter-image.tsx
 │  ├─ icon.tsx · apple-icon.tsx
 │  └─ sitemap.ts · robots.ts
 ├─ components/
-│  ├─ sections/             # Navbar, Hero, About, Projects, Stack, Timeline, Contact, Footer
-│  ├─ ui/                   # Button, Card, Tag, SectionTitle, Reveal, SocialLinks…
+│  ├─ Background.tsx        # foto de fondo fija
+│  ├─ sections/             # Navbar, Hero, Projects, Stack, Timeline, Contact, Footer
+│  ├─ ui/                   # Button, Tag, SectionTitle, Reveal, SocialLinks…
 │  └─ chat/ChatWidget.tsx   # interfaz del asistente
 ├─ data/
 │  ├─ profile.ts            # ← TODO EL CONTENIDO
