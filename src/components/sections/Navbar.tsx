@@ -32,7 +32,7 @@ export function Navbar({ nav, a11y, initials, cvHref, cvFileName }: NavbarProps)
   }, [open]);
 
   const cvButton = cvHref ? (
-    <a href={cvHref} download={cvFileName} className={buttonClasses({ className: "h-9 px-4" })}>
+    <a href={cvHref} download={cvFileName} className={buttonClasses({ className: "h-9 px-4 md:h-9 md:px-3.5 md:text-[13px]" })}>
       <Download className="h-4 w-4" aria-hidden />
       {nav.cv}
     </a>
@@ -40,7 +40,7 @@ export function Navbar({ nav, a11y, initials, cvHref, cvFileName }: NavbarProps)
     <span
       aria-disabled="true"
       title={nav.cvUnavailable}
-      className="inline-flex h-9 cursor-not-allowed items-center rounded-full border border-line px-4 text-sm text-faint"
+      className="inline-flex h-9 cursor-not-allowed items-center rounded-full border border-line px-3.5 text-[13px] text-faint"
     >
       {nav.cvUnavailable}
     </span>
@@ -48,12 +48,12 @@ export function Navbar({ nav, a11y, initials, cvHref, cvFileName }: NavbarProps)
 
   return (
     <header className="fixed inset-x-0 top-4 z-50 px-4">
-      <div className="glass mx-auto flex h-14 max-w-[820px] items-center justify-between gap-4 rounded-full pl-6 pr-2">
+      <div className="glass mx-auto flex h-14 max-w-[820px] items-center justify-between gap-4 rounded-full pl-6 pr-2 md:h-12 md:max-w-[640px] md:pl-5 md:pr-1.5">
         <a
           href="#inicio"
           aria-label={nav.home}
           onClick={() => setOpen(false)}
-          className="font-display text-base font-semibold tracking-tight text-fg"
+          className="font-display text-base font-semibold tracking-tight text-fg md:text-sm"
         >
           {initials}
         </a>
@@ -68,7 +68,7 @@ export function Navbar({ nav, a11y, initials, cvHref, cvFileName }: NavbarProps)
                     href={`#${link.id}`}
                     aria-current={isActive ? "location" : undefined}
                     className={cn(
-                      "relative isolate rounded-full px-3.5 py-2 text-sm transition-colors duration-300",
+                      "relative isolate rounded-full px-3 py-1.5 text-[13px] transition-colors duration-300",
                       isActive ? "text-fg" : "text-muted hover:text-fg",
                     )}
                   >

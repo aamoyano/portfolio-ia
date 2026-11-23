@@ -27,13 +27,13 @@ export function Hero({ content, cvHref }: HeroProps) {
       <Container className="flex max-w-[860px] flex-col items-center text-center">
         <h1
           id="inicio-title"
-          className="animate-fade-up text-balance font-display text-[clamp(2.75rem,8.5vw,6rem)] font-medium leading-[0.98] tracking-[-0.04em] text-fg"
+          className="animate-fade-up text-balance font-display text-[clamp(2.75rem,6vw,4.25rem)] font-medium leading-[0.98] tracking-[-0.04em] text-fg"
           style={delay(0.05)}
         >
           {siteConfig.name}
         </h1>
 
-        <p className="animate-fade-up mt-6 text-lg text-muted sm:text-xl" style={delay(0.15)}>
+        <p className="animate-fade-up mt-5 text-lg text-muted" style={delay(0.15)}>
           {hero.subtitle}
         </p>
 
