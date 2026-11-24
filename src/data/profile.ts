@@ -372,7 +372,7 @@ const es: Content = {
     strengths: [
       "Autonomía: ha trabajado en remoto como autónomo, gestionando proyectos con clientes finales.",
       "Aprende rápido y se adapta con facilidad a nuevos entornos.",
-      "Buenas relaciones sociales y trato con clientes: reuniones para entender sus necesidades y proponer soluciones, también en inglés.",
+      "Buenas relaciones sociales y trato con clientes: reuniones para entender sus necesidades y proponer soluciones.",
       "Compromiso y muchas ganas de desarrollar su carrera profesional.",
     ],
     workPreferences: [
@@ -402,8 +402,19 @@ const es: Content = {
       learning: ["LangChain", "Pandas", "NumPy", "n8n", "MongoDB", "Docker"],
     },
     certifications:
-      "Por ahora no tiene certificaciones adicionales, pero está preparándolas, incluido el certificado oficial de inglés.",
+      "Por ahora no tiene certificaciones adicionales, pero está preparándolas.",
+    projects: [
+      "Durante su experiencia profesional ha trabajado en muchos proyectos web para clientes, desde la reunión inicial hasta la web en producción.",
+      "Además, tiene dos proyectos propios con IA:",
+      "Portfolio con asistente de IA (en desarrollo): esta misma web, con un chatbot que responde sobre su perfil usando un LLM. Next.js, TypeScript y API de LLMs.",
+      "Sistema de reservas para una casa rural (en desarrollo): una web para gestionar las reservas, con un chatbot con IA que resuelve las dudas de los clientes. Python, LLMs, agentes y SQL.",
+    ],
     onlyIfAsked: [
+      {
+        topic: "Idiomas o inglés (solo si preguntan por idiomas)",
+        answer:
+          "Español nativo. Inglés intermedio y conversacional: lo usa en reuniones con clientes. Está preparando el certificado oficial.",
+      },
       {
         topic: "Aficiones",
         answer: "Le gusta jugar al ajedrez, tocar el piano y la naturaleza.",

@@ -222,6 +222,8 @@ export interface Content {
       learning: string[];
     };
     certifications: string;
+    /** Cómo responder a "¿qué proyectos ha hecho?" (sustituye a la lista de la web) */
+    projects: string[];
     /** Temas que el bot solo cuenta si se los preguntan explícitamente */
     onlyIfAsked: { topic: string; answer: string }[];
   };

@@ -11,7 +11,7 @@ import { getContent, type Locale } from "@/i18n";
  */
 export function buildKnowledgeBase(locale?: Locale): string {
   const content: Content = getContent(locale);
-  const { person, about, projects, timeline, assistant } = content;
+  const { person, about, timeline, assistant } = content;
 
   const lines: string[] = [
     `# ${siteConfig.name}`,
@@ -20,7 +20,6 @@ export function buildKnowledgeBase(locale?: Locale): string {
     `- Resumen: ${person.summary}`,
     `- Objetivo: ${person.objective}`,
     `- Disponibilidad: ${person.availability}`,
-    `- Idiomas: ${person.languages.map((l) => `${l.name} (${l.level})`).join("; ")}`,
     `- Certificaciones: ${assistant.certifications}`,
     `- Email: ${siteConfig.email}`,
     `- LinkedIn: ${siteConfig.links.linkedin}`,
@@ -47,10 +46,7 @@ export function buildKnowledgeBase(locale?: Locale): string {
     `- Está aprendiendo: ${assistant.skills.learning.join(", ")}`,
     "",
     "## Proyectos (los únicos que puedes mencionar)",
-    ...projects.items.map(
-      (p) =>
-        `- ${p.title} (${projects.statusLabels[p.status]}): ${p.description} Tecnologías: ${p.tags.join(", ")}.`,
-    ),
+    ...assistant.projects.map((p) => `- ${p}`),
     "",
     "## Trayectoria (de la más reciente a la más antigua)",
     ...[...timeline.items]
