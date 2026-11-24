@@ -8,13 +8,15 @@
   /* Azul profundo del lago: texto oscuro sobre fondos claros */
   --color-bg: #1c2347;
   /*
-   * Colores del borde superior e inferior de la foto, tal y como se ve en un
-   * iPhone (con el velo de Background.tsx). Safari en iOS 26 pinta la barra de
-   * estado y la zona de la barra inferior de un color sólido: con estos tonos
-   * parece que la foto continúa. Si cambias la foto de fondo, recalcúlalos.
+   * Color de la foto justo al lado de las barras de Safari en un iPhone (con el
+   * velo de Background.tsx), no el del borde absoluto, que queda oculto detrás de
+   * ellas. Safari en iOS 26 pinta la barra de estado y la inferior de un color
+   * sólido: con estos tonos parece que la foto continúa. El chat a pantalla
+   * completa del móvil también empieza y termina con ellos.
+   * Si cambias la foto de fondo, recalcúlalos.
    */
-  --color-edge-top: #aa7c57;
-  --color-edge-bottom: #95785a;
+  --color-edge-top: #b8845d;
+  --color-edge-bottom: #a67a62;
   --color-fg: #ffffff;
   --color-muted: rgba(255, 255, 255, 0.8);
   --color-faint: rgba(255, 255, 255, 0.62);
