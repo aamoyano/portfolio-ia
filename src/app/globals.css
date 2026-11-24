@@ -15,6 +15,10 @@
    */
   --color-edge-top: #aa7c57;
   --color-edge-bottom: #95785a;
+  /* Color del fondo del chat (móvil, a pantalla completa) junto a cada barra:
+     mientras está abierto, las barras de Safari toman estos tonos */
+  --color-chat-edge-top: #83787c;
+  --color-chat-edge-bottom: #615a62;
   --color-fg: #ffffff;
   --color-muted: rgba(255, 255, 255, 0.8);
   --color-faint: rgba(255, 255, 255, 0.62);
