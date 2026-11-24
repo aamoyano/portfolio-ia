@@ -116,7 +116,7 @@ const es: Content = {
     suggestionsLabel: "Preguntas de ejemplo",
     suggestions: [
       "¿Qué proyectos ha hecho?",
-      "¿Está disponible?",
+      "¿Qué experiencia tiene?",
       "¿Por qué contratarle?",
     ],
     inputLabel: "Escribe tu pregunta sobre Antonio",
@@ -256,7 +256,7 @@ const es: Content = {
         start: "2026-09",
         period: "2026 – 2027",
         description:
-          "Formación presencial de tarde. Aprende, entre otras materias, agentes de IA y gestión de bases de datos.",
+          "Agentes de IA y gestión de bases de datos, entre otras materias.",
         location: "Madrid",
         current: true,
       },
@@ -267,7 +267,7 @@ const es: Content = {
         start: "2025-08",
         period: "ago 2025 – sep 2026",
         description:
-          "Proyectos web para clientes finales, en remoto y como autónomo: reuniones con los clientes, análisis de sus necesidades y propuesta de soluciones. Webs WordPress en producción: mejoras visuales, adaptación responsive y resolución de incidencias. Lo compaginaba con APPSUR.",
+          "Proyectos web para clientes finales, en remoto: reuniones con los clientes, análisis de sus necesidades y propuesta de soluciones. Webs WordPress en producción: mejoras visuales, adaptación responsive y resolución de incidencias. Lo compaginaba con APPSUR.",
       },
       {
         type: "work",
@@ -304,7 +304,7 @@ const es: Content = {
         start: "2023-04",
         period: "abr – jun 2023",
         description:
-          "Prácticas del grado superior de Marketing y Publicidad: informes de resultados de publicidad (CTR, CPC, impresiones y conversiones), seguimiento de campañas y verificación y supervisión de resultados.",
+          "Prácticas del grado superior de Marketing y Publicidad: informes de resultados publicitarios (CTR, CPC, impresiones y conversiones) y seguimiento y supervisión de campañas.",
         location: "Córdoba",
       },
       {
@@ -323,7 +323,7 @@ const es: Content = {
   contact: {
     eyebrow: "Contacto",
     title: "¿Hablamos?",
-    text: "Estoy buscando prácticas o un puesto junior en IA, datos o automatización. Tengo disponibilidad inmediata.",
+    text: "Estoy buscando prácticas o un puesto junior en IA, datos o automatización.",
     emailLabel: "Escríbeme un email",
     linkedinLabel: "LinkedIn",
     githubLabel: "GitHub",
