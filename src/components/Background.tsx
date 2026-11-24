@@ -25,14 +25,21 @@ export function Background() {
       </div>
 
       {/*
-        Franja de la barra de estado (Safari en iOS 26 se fija en el elemento fijo
-        pegado al borde superior). En vez de un color sólido es vidrio translúcido:
-        así Safari deja ver la foto desenfocada detrás de la barra, como hace con la
-        barra inferior al hacer scroll. La barra inferior toma el color de html.
+        Móvil: degradados fijos arriba y abajo, siempre visibles.
+        - Arriba: color sólido detrás de la barra de estado que se funde con la foto.
+        - Abajo: la foto se funde con el color de la zona de la barra de Safari.
+          Safari solo dibuja ese degradado con su barra desplegada; al hacer scroll
+          desaparecía. Con este, se mantiene siempre.
+        Van por encima del contenido (que pasa por debajo, como en una app) y por
+        debajo de la navbar (z-50) y del chat (z-80).
       */}
       <div
         aria-hidden
-        className="fixed inset-x-0 top-0 -z-[5] h-[env(safe-area-inset-top)] min-h-px bg-white/5 backdrop-blur-xl"
+        className="pointer-events-none fixed inset-x-0 top-0 z-40 h-[calc(env(safe-area-inset-top)+3.5rem)] bg-[linear-gradient(180deg,var(--color-edge-top)_0%,var(--color-edge-top)_env(safe-area-inset-top),transparent_100%)] lg:hidden"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-x-0 bottom-0 z-40 h-[calc(env(safe-area-inset-bottom)+3.5rem)] bg-[linear-gradient(0deg,var(--color-edge-bottom)_0%,var(--color-edge-bottom)_env(safe-area-inset-bottom),transparent_100%)] lg:hidden"
       />
     </>
   );
