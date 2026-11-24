@@ -25,14 +25,14 @@ export function Background() {
       </div>
 
       {/*
-        Safari en iOS 26 pinta la barra de estado con el color de fondo del
-        elemento fijo pegado al borde superior. Esta franja (del alto de la
-        barra de estado) le da el color del cielo de la foto; la barra inferior
-        toma el color de fondo de html/body (--color-edge-bottom).
+        Franja de la barra de estado (Safari en iOS 26 se fija en el elemento fijo
+        pegado al borde superior). En vez de un color sólido es vidrio translúcido:
+        así Safari deja ver la foto desenfocada detrás de la barra, como hace con la
+        barra inferior al hacer scroll. La barra inferior toma el color de html.
       */}
       <div
         aria-hidden
-        className="fixed inset-x-0 top-0 -z-[5] h-[env(safe-area-inset-top)] min-h-px bg-[var(--color-edge-top)]"
+        className="fixed inset-x-0 top-0 -z-[5] h-[env(safe-area-inset-top)] min-h-px bg-white/5 backdrop-blur-xl"
       />
     </>
   );

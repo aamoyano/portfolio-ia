@@ -77,15 +77,14 @@ export function ChatWidget({ chat, enabled }: ChatWidgetProps) {
 
   const close = useCallback(() => setOpen(false), []);
 
-  // En el móvil el chat ocupa toda la pantalla: mientras está abierto, las barras
-  // de Safari toman el color del fondo del chat; al cerrarlo vuelven los de la foto
+  // En el móvil el chat ocupa toda la pantalla: mientras está abierto, la barra
+  // inferior de Safari toma el color del fondo del chat; al cerrarlo vuelve el de la foto.
+  // (La superior es vidrio translúcido siempre: ver Background.tsx)
   useEffect(() => {
     if (!open || !window.matchMedia("(max-width: 639px)").matches) return;
     const root = document.documentElement.style;
-    root.setProperty("--color-edge-top", "var(--color-chat-edge-top)");
     root.setProperty("--color-edge-bottom", "var(--color-chat-edge-bottom)");
     return () => {
-      root.removeProperty("--color-edge-top");
       root.removeProperty("--color-edge-bottom");
     };
   }, [open]);
