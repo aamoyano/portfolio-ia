@@ -74,17 +74,17 @@ export function ChatPanel({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.25 }}
-      className="fixed inset-0 z-[80] flex justify-center bg-[rgb(20_25_55/0.35)] backdrop-blur-xl max-sm:bg-[linear-gradient(180deg,var(--color-edge-top)_0%,rgb(20_25_55/0.55)_12%,rgb(20_25_55/0.55)_88%,var(--color-edge-bottom)_100%)] max-sm:backdrop-blur-[48px] max-sm:bg-transparent max-sm:backdrop-saturate-150"
+      className="fixed inset-0 z-[80] flex justify-center bg-[rgb(20_25_55/0.35)] backdrop-blur-xl"
     >
       <motion.div
         initial={{ opacity: 0, y: 16, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 16, scale: 0.98 }}
         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-        className="flex h-[100dvh] w-full max-w-3xl pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)] sm:p-6"
+        className="flex h-[100dvh] w-full max-w-3xl sm:p-6"
       >
-        {/* En el móvil, sin marco: fondo liso a pantalla completa, como una app de mensajería */}
-        <div className="glass flex w-full flex-col overflow-hidden max-sm:rounded-none max-sm:border-0 max-sm:bg-none max-sm:shadow-none max-sm:before:hidden sm:rounded-[28px]">
+        {/* En el móvil ocupa toda la pantalla (sin margen ni esquinas): no asoma la foto alrededor */}
+        <div className="glass flex w-full flex-col overflow-hidden max-sm:border-0 sm:rounded-[28px]">
           {/* Cabecera */}
           <header className="flex items-center gap-3 border-b border-white/15 px-4 py-3 sm:px-6">
             <span className="glass-solid grid h-9 w-9 shrink-0 place-items-center rounded-full">
