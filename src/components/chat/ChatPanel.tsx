@@ -74,7 +74,7 @@ export function ChatPanel({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.25 }}
-      className="fixed inset-0 z-[80] flex justify-center bg-chat sm:bg-[rgb(20_25_55/0.35)] sm:backdrop-blur-xl"
+      className="fixed inset-0 z-[80] flex justify-center bg-[rgb(20_25_55/0.35)] backdrop-blur-xl max-sm:bg-[linear-gradient(180deg,var(--color-edge-top)_0%,rgb(20_25_55/0.55)_12%,rgb(20_25_55/0.55)_88%,var(--color-edge-bottom)_100%)] max-sm:backdrop-blur-[48px] max-sm:bg-transparent max-sm:backdrop-saturate-150"
     >
       <motion.div
         initial={{ opacity: 0, y: 16, scale: 0.98 }}
