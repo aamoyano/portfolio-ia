@@ -232,7 +232,6 @@ const es: Content = {
           { name: "PHP", icon: "php" },
           { name: "Laravel", icon: "laravel" },
           { name: "MySQL", icon: "mysql" },
-          { name: "WordPress", icon: "wordpress" },
           { name: "Git", icon: "git" },
         ],
       },
@@ -267,7 +266,7 @@ const es: Content = {
         start: "2025-08",
         period: "ago 2025 – sep 2026",
         description:
-          "Proyectos web para clientes finales, en remoto: reuniones con los clientes, análisis de sus necesidades y propuesta de soluciones. Webs WordPress en producción: mejoras visuales, adaptación responsive y resolución de incidencias. Lo compaginaba con APPSUR.",
+          "Proyectos web para clientes finales, en remoto: reuniones con los clientes, análisis de sus necesidades y propuesta de soluciones. Webs en producción: mejoras visuales, adaptación responsive y resolución de incidencias. Lo compaginaba con APPSUR.",
       },
       {
         type: "work",
@@ -276,7 +275,7 @@ const es: Content = {
         start: "2025-12",
         period: "dic 2025 – jul 2026",
         description:
-          "Diseño y desarrollo web en WordPress, con foco en rendimiento y experiencia de usuario, y reuniones con clientes.",
+          "Diseño, desarrollo y personalización de soluciones web a medida para clientes, con foco en el rendimiento y la experiencia de usuario. Reuniones con los clientes para entender sus necesidades, resolución de incidencias en producción y ajustes funcionales con JavaScript, PHP y MySQL.",
       },
       {
         type: "work",
@@ -285,7 +284,7 @@ const es: Content = {
         start: "2025-04",
         period: "abr – jun 2025",
         description:
-          "Contrato de prácticas del grado superior de Desarrollo de Aplicaciones Web: soluciones digitales y diseño web para empresas en WordPress, y soporte técnico.",
+          "Contrato de prácticas del grado superior de Desarrollo de Aplicaciones Web: soluciones digitales y diseño web para empresas, y soporte técnico.",
       },
       {
         type: "education",
