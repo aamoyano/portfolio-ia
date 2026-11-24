@@ -170,7 +170,7 @@ const es: Content = {
         status: "in-progress",
         image: "/projects/portfolio-ia.jpg",
         demo: "",
-        github: "",
+        github: "https://github.com/aamoyano/portfolio-ia",
       },
       {
         slug: "reservas-ia",
