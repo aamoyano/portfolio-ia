@@ -15,6 +15,8 @@
    */
   --color-edge-top: #aa7c57;
   --color-edge-bottom: #95785a;
+  /* Fondo del chat a pantalla completa en el móvil (y de las barras de Safari mientras está abierto) */
+  --color-chat: #1e2650;
   --color-fg: #ffffff;
   --color-muted: rgba(255, 255, 255, 0.8);
   --color-faint: rgba(255, 255, 255, 0.62);

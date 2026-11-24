@@ -77,6 +77,19 @@ export function ChatWidget({ chat, enabled }: ChatWidgetProps) {
 
   const close = useCallback(() => setOpen(false), []);
 
+  // En el móvil el chat ocupa toda la pantalla: mientras está abierto, Safari pinta
+  // sus barras del color del chat (--color-edge-* en globals.css); al cerrar, vuelven los de la foto
+  useEffect(() => {
+    if (!open || !window.matchMedia("(max-width: 639px)").matches) return;
+    const root = document.documentElement.style;
+    root.setProperty("--color-edge-top", "var(--color-chat)");
+    root.setProperty("--color-edge-bottom", "var(--color-chat)");
+    return () => {
+      root.removeProperty("--color-edge-top");
+      root.removeProperty("--color-edge-bottom");
+    };
+  }, [open]);
+
   async function send(text: string) {
     const question = text.trim();
     if (!question || streaming) return;
