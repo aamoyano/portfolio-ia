@@ -164,6 +164,15 @@
   }
 }
 
+/* Con el teclado del móvil abierto (un campo de texto con el foco), el degradado
+   inferior flotaría sobre el teclado: se oculta mientras se escribe */
+.edge-fade-bottom {
+  transition: opacity 0.2s ease;
+}
+html:has(input:focus, textarea:focus) .edge-fade-bottom {
+  opacity: 0;
+}
+
 /* Navegadores sin backdrop-filter: vidrio más opaco para mantener la legibilidad */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .glass {

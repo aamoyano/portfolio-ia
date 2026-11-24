@@ -31,7 +31,8 @@ export function Background() {
           Safari solo dibuja ese degradado con su barra desplegada; al hacer scroll
           desaparecía. Con este, se mantiene siempre.
         Van por encima del contenido (que pasa por debajo, como en una app) y por
-        debajo de la navbar (z-50) y del chat (z-80).
+        debajo de la navbar (z-50) y del chat (z-80). El de abajo se oculta mientras
+        se escribe: en iOS los elementos fijos abajo flotan sobre el teclado.
       */}
       <div
         aria-hidden
@@ -39,7 +40,7 @@ export function Background() {
       />
       <div
         aria-hidden
-        className="pointer-events-none fixed inset-x-0 bottom-0 z-40 h-[calc(env(safe-area-inset-bottom)+3.5rem)] bg-[linear-gradient(0deg,var(--color-edge-bottom)_0%,var(--color-edge-bottom)_env(safe-area-inset-bottom),transparent_100%)] lg:hidden"
+        className="edge-fade-bottom pointer-events-none fixed inset-x-0 bottom-0 z-40 h-[calc(env(safe-area-inset-bottom)+3.5rem)] bg-[linear-gradient(0deg,var(--color-edge-bottom)_0%,var(--color-edge-bottom)_env(safe-area-inset-bottom),transparent_100%)] lg:hidden"
       />
     </>
   );
