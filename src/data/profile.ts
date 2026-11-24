@@ -363,7 +363,7 @@ const es: Content = {
   assistant: {
     experienceSummary: [
       "Más de un año de experiencia profesional como desarrollador web (agosto 2025 – septiembre 2026).",
-      "Durante gran parte de ese tiempo compaginó dos empresas: Xpandex y APPSUR.",
+      "Durante gran parte de ese tiempo compaginó dos empresas: Xpandex, como autónomo, y APPSUR.",
       "Trabajó con clientes reales y webs en producción, desde la reunión inicial hasta la solución.",
       "Antes hizo prácticas en desarrollo web (Nogomet Comunicación) y en marketing digital (Diario Córdoba).",
     ],
@@ -396,7 +396,7 @@ const es: Content = {
         "SQL",
         "Git",
         "SEO básico",
-        "Hosting básico",
+        "Hosting",
         "Java",
       ],
       learning: ["LangChain", "Pandas", "NumPy", "n8n", "MongoDB", "Docker"],
@@ -410,6 +410,10 @@ const es: Content = {
       "Sistema de reservas para una casa rural (en desarrollo): una web para gestionar las reservas, con un chatbot con IA que resuelve las dudas de los clientes. Python, LLMs, agentes y SQL.",
     ],
     onlyIfAsked: [
+      {
+        topic: "Carnet de conducir y coche",
+        answer: "Tiene carnet de conducir y coche.",
+      },
       {
         topic: "Edad",
         answer: "Tiene 25 años.",
