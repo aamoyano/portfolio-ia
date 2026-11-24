@@ -411,6 +411,10 @@ const es: Content = {
     ],
     onlyIfAsked: [
       {
+        topic: "Edad",
+        answer: "Tiene 25 años.",
+      },
+      {
         topic: "Idiomas o inglés (solo si preguntan por idiomas)",
         answer:
           "Español nativo. Inglés intermedio y conversacional: lo usa en reuniones con clientes. Está preparando el certificado oficial.",
