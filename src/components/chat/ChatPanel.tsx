@@ -87,8 +87,14 @@ export function ChatPanel({
       />
       <div
         aria-hidden
-        className="edge-fade-bottom pointer-events-none absolute inset-x-0 bottom-0 h-[calc(env(safe-area-inset-bottom)+3.5rem)] bg-[linear-gradient(0deg,var(--color-edge-bottom)_0%,var(--color-edge-bottom)_env(safe-area-inset-bottom),transparent_100%)] sm:hidden"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[calc(env(safe-area-inset-bottom)+3.5rem)] bg-[linear-gradient(0deg,var(--color-edge-bottom)_0%,var(--color-edge-bottom)_env(safe-area-inset-bottom),transparent_100%)] sm:hidden"
       />
+      {/*
+        Con el teclado abierto, Safari deja ver la web por debajo del chat (detrás de su
+        barra de direcciones y de la barra del teclado). Este bloque prolonga el color
+        de abajo para que no asome la página.
+      */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-full h-[100lvh] bg-[var(--color-edge-bottom)] sm:hidden" />
       <motion.div
         initial={{ opacity: 0, y: 16, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
