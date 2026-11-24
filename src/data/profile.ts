@@ -81,9 +81,11 @@ const es: Content = {
 
   nav: {
     links: [
+      { id: "sobre-mi", label: "Sobre mí" },
       { id: "proyectos", label: "Proyectos" },
       { id: "stack", label: "Stack" },
-      { id: "trayectoria", label: "Trayectoria" },
+      { id: "experiencia", label: "Experiencia" },
+      { id: "formacion", label: "Formación" },
       { id: "contacto", label: "Contacto" },
     ],
     cv: "CV",

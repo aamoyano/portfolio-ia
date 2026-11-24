@@ -1,4 +1,5 @@
 import { Background } from "@/components/Background";
+import { About } from "@/components/sections/About";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
 import { Hero } from "@/components/sections/Hero";
@@ -13,10 +14,11 @@ import { getChatProvider } from "@/lib/chat/providers";
 
 export default function Home() {
   const content = getContent();
-  const { cv } = siteConfig.assets;
+  const { cv, photo } = siteConfig.assets;
 
   // Archivos que añadirás tú en /public: si no existen, no se muestran
   const cvHref = publicFileExists(cv) ? cv : null;
+  const photoSrc = publicFileExists(photo) ? photo : null;
   // El chat solo se activa si está encendido en profile.ts y hay una API key (OpenRouter o Anthropic)
   const chatEnabled = siteConfig.chatEnabled && getChatProvider() !== null;
   const projects = content.projects.items.map((project) => ({
@@ -28,7 +30,7 @@ export default function Home() {
     <>
       <Background />
       <a
-        href="#proyectos"
+        href="#sobre-mi"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-bg"
       >
         {content.a11y.skipToContent}
@@ -42,9 +44,11 @@ export default function Home() {
       />
       <main className="overflow-x-clip">
         <Hero content={content} chatEnabled={chatEnabled} />
+        <About about={content.about} photoSrc={photoSrc} />
         <Projects projects={content.projects} a11y={content.a11y} items={projects} />
         <Stack stack={content.stack} />
-        <Timeline timeline={content.timeline} />
+        <Timeline timeline={content.timeline} type="work" id="experiencia" />
+        <Timeline timeline={content.timeline} type="education" id="formacion" />
         <Contact contact={content.contact} />
       </main>
       <Footer footer={content.footer} />

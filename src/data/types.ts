@@ -236,4 +236,4 @@ export interface Content {
   };
 }
 
-export type SectionId = "sobre-mi" | "proyectos" | "stack" | "trayectoria" | "contacto";
+export type SectionId = "sobre-mi" | "proyectos" | "stack" | "experiencia" | "formacion" | "contacto";

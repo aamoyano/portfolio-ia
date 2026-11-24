@@ -1,5 +1,5 @@
 import { Briefcase, GraduationCap } from "lucide-react";
-import type { Content } from "@/data/types";
+import type { Content, SectionId, TimelineType } from "@/data/types";
 import { Reveal } from "../ui/Reveal";
 import { Section } from "../ui/Section";
 import { SectionTitle } from "../ui/SectionTitle";
@@ -9,17 +9,26 @@ const icons = {
   education: GraduationCap,
 } as const;
 
+interface TimelineProps {
+  timeline: Content["timeline"];
+  /** Qué parte de la trayectoria muestra: experiencia o formación */
+  type: TimelineType;
+  id: SectionId;
+}
+
 /**
- * Trayectoria completa (estudios y experiencia) en una línea de tiempo vertical,
- * de lo más reciente a lo más antiguo, dentro de un único panel de vidrio
- * del mismo ancho que el resto de secciones. Datos en `timeline.items` (profile.ts).
+ * Experiencia o formación en una línea de tiempo vertical, de lo más reciente
+ * a lo más antiguo, dentro de un único panel de vidrio del mismo ancho que el
+ * resto de secciones. Datos en `timeline.items` (profile.ts).
  */
-export function Timeline({ timeline }: { timeline: Content["timeline"] }) {
-  const items = [...timeline.items].sort((a, b) => b.start.localeCompare(a.start));
+export function Timeline({ timeline, type, id }: TimelineProps) {
+  const items = timeline.items
+    .filter((item) => item.type === type)
+    .sort((a, b) => b.start.localeCompare(a.start));
 
   return (
-    <Section id="trayectoria">
-      <SectionTitle id="trayectoria" title={timeline.eyebrow} />
+    <Section id={id}>
+      <SectionTitle id={id} title={timeline.typeLabels[type]} />
 
       <Reveal>
         <div className="glass rounded-[28px] px-5 py-8 sm:px-8 sm:py-10">

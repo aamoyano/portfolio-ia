@@ -46,7 +46,7 @@ export function Hero({ content, chatEnabled }: HeroProps) {
 
       {/* Indicador de scroll hacia el resto de la web */}
       <a
-        href="#proyectos"
+        href="#sobre-mi"
         aria-label={hero.scrollLabel}
         className="animate-fade-up glass glass-hover absolute bottom-8 left-1/2 grid h-11 w-11 -translate-x-1/2 place-items-center rounded-full"
         style={delay(0.6)}

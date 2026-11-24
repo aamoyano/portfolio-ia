@@ -87,7 +87,7 @@ export function Navbar({ nav, a11y, initials, cvHref, cvFileName }: NavbarProps)
                     href={`#${link.id}`}
                     aria-current={isActive ? "location" : undefined}
                     className={cn(
-                      "relative isolate rounded-full px-3 py-1.5 text-[13px] transition-colors duration-300",
+                      "relative isolate whitespace-nowrap rounded-full px-3 py-1.5 text-[13px] transition-colors duration-300",
                       isActive ? "text-fg" : "text-muted hover:text-fg",
                     )}
                   >
@@ -141,7 +141,7 @@ export function Navbar({ nav, a11y, initials, cvHref, cvFileName }: NavbarProps)
                     onClick={() => setOpen(false)}
                     aria-current={active === link.id ? "location" : undefined}
                     className={cn(
-                      "block rounded-2xl px-4 py-3 font-display text-xl transition-colors",
+                      "block whitespace-nowrap rounded-2xl px-4 py-3 font-display text-xl transition-colors",
                       active === link.id ? "bg-white/15 text-fg" : "text-muted hover:text-fg",
                     )}
                   >
