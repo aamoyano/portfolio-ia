@@ -176,7 +176,7 @@ const es: Content = {
         slug: "reservas-ia",
         title: "Automatización de reservas con IA",
         description:
-          "Web para gestionar las reservas de una casa rural familiar, con un chatbot con IA que resuelve dudas.",
+          "Web para gestionar las reservas de una casa rural, con un chatbot con IA que resuelve dudas.",
         tags: ["Python", "LLMs", "Agentes", "SQL"],
         status: "in-progress",
         image: "/projects/reservas-ia.jpg",
