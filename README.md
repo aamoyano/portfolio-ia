@@ -134,7 +134,7 @@ Copia `.env.example` como `.env.local` y rellena los valores. En Vercel se confi
 | Variable | Para qué |
 | --- | --- |
 | `OPENROUTER_API_KEY` o `ANTHROPIC_API_KEY` | Activa el chatbot (basta una; si están las dos, se usa OpenRouter). Sin ninguna, el chat muestra "Próximamente". |
-| `CHAT_MODEL` | Opcional: cambia el modelo (por defecto Claude Opus 5.5). |
+| `CHAT_MODEL` | Opcional: cambia el modelo (por defecto Claude Sonnet 5.5). |
 | `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` | Límite de uso compartido entre instancias (recomendado en producción). |
 | `NEXT_PUBLIC_SITE_URL` | Tu dominio propio, para metadatos y sitemap. |
 
@@ -171,8 +171,8 @@ Se cambia con la variable `CHAT_MODEL`. Con unos 3.000 tokens de entrada y 300 d
 
 | Modelo | Coste aprox. por pregunta |
 | --- | --- |
-| Claude Opus 5.5 (`anthropic/claude-opus-5.5`, por defecto) | ~0,018 $ |
-| Claude Sonnet 5.5 (`anthropic/claude-sonnet-5.5`) | ~0,009 $ |
+| Claude Opus 5.5 (`anthropic/claude-opus-5.5`) | ~0,018 $ |
+| Claude Sonnet 5.5 (`anthropic/claude-sonnet-5.5`, por defecto) | ~0,009 $ |
 | Claude Haiku 5.5 (`anthropic/claude-haiku-5.5`) | ~0,0005 $ |
 
 Con Anthropic directo, los nombres son `claude-opus-5-5`, `claude-sonnet-5-5` y `claude-haiku-5-5`.

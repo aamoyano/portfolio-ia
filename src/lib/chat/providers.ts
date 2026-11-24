@@ -14,8 +14,8 @@ import type { ChatMessage } from "./types";
 export type ChatProvider = "openrouter" | "anthropic";
 
 const DEFAULT_MODELS: Record<ChatProvider, string> = {
-  openrouter: "anthropic/claude-opus-5.5",
-  anthropic: "claude-opus-5-5",
+  openrouter: "anthropic/claude-sonnet-5.5",
+  anthropic: "claude-sonnet-5-5",
 };
 
 /** Respuestas cortas a propósito (incluye el razonamiento interno del modelo) */
