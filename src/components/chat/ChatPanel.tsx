@@ -76,15 +76,31 @@ export function ChatPanel({
       transition={{ duration: 0.25 }}
       className="fixed inset-0 z-[80] flex justify-center bg-[rgb(20_25_55/0.35)] backdrop-blur-xl"
     >
+      {/*
+        Móvil: los mismos degradados cálidos que la web (Background.tsx), para que
+        las barras de Safari y el chat formen un conjunto: color sólido detrás de
+        cada barra que se funde con la foto desenfocada.
+      */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-[calc(env(safe-area-inset-top)+3.5rem)] bg-[linear-gradient(180deg,var(--color-edge-top)_0%,var(--color-edge-top)_env(safe-area-inset-top),transparent_100%)] sm:hidden"
+      />
+      <div
+        aria-hidden
+        className="edge-fade-bottom pointer-events-none absolute inset-x-0 bottom-0 h-[calc(env(safe-area-inset-bottom)+3.5rem)] bg-[linear-gradient(0deg,var(--color-edge-bottom)_0%,var(--color-edge-bottom)_env(safe-area-inset-bottom),transparent_100%)] sm:hidden"
+      />
       <motion.div
         initial={{ opacity: 0, y: 16, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 16, scale: 0.98 }}
         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-        className="flex h-[100dvh] w-full max-w-3xl sm:p-6"
+        className="relative flex h-[100dvh] w-full max-w-3xl pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)] sm:p-6"
       >
-        {/* En el móvil ocupa toda la pantalla (sin margen ni esquinas): no asoma la foto alrededor */}
-        <div className="glass flex w-full flex-col overflow-hidden max-sm:border-0 sm:rounded-[28px]">
+        {/*
+          En el móvil ocupa toda la pantalla, sin marco ni vidrio propio: el fondo es la
+          foto desenfocada con los degradados de arriba (el vidrio los alteraría).
+        */}
+        <div className="glass flex w-full flex-col overflow-hidden max-sm:border-0 max-sm:bg-none max-sm:shadow-none max-sm:[-webkit-backdrop-filter:none] max-sm:[backdrop-filter:none] max-sm:before:hidden sm:rounded-[28px]">
           {/* Cabecera */}
           <header className="flex items-center gap-3 border-b border-white/15 px-4 py-3 sm:px-6">
             <span className="glass-solid grid h-9 w-9 shrink-0 place-items-center rounded-full">
