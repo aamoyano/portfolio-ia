@@ -276,7 +276,7 @@ const es: Content = {
         start: "2025-12",
         period: "dic 2025 – jul 2026",
         description:
-          "Diseño y desarrollo web en WordPress, con foco en rendimiento y experiencia de usuario, y reuniones con clientes (algunas en inglés).",
+          "Diseño y desarrollo web en WordPress, con foco en rendimiento y experiencia de usuario, y reuniones con clientes.",
       },
       {
         type: "work",
