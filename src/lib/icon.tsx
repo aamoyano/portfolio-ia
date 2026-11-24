@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { siteConfig } from "@/data/profile";
 
-/** Favicon con las iniciales sobre el degradado de la marca. */
+/** Favicon con las iniciales sobre el degradado del atardecer. */
 export function renderIcon(size: number) {
   return new ImageResponse(
     (
@@ -13,7 +13,8 @@ export function renderIcon(size: number) {
           alignItems: "center",
           justifyContent: "center",
           borderRadius: size * 0.22,
-          backgroundImage: "linear-gradient(135deg, #8B5CF6 0%, #6D5DF6 50%, #22D3EE 120%)",
+          // Colores del atardecer del fondo: melocotón del cielo y azul del lago
+          backgroundImage: "linear-gradient(160deg, #F2A779 0%, #B07A66 45%, #1C2347 100%)",
           color: "white",
           fontSize: size * 0.36,
           fontWeight: 700,

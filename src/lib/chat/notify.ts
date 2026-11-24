@@ -130,7 +130,7 @@ export function describeReferrer(referrer: unknown, ownHost: string | null): str
 /* ---------- Aviso destacado ---------- */
 
 const HOT_WORDS = /\b(ofert\w*|entrevist\w*|contrat\w*|puestos?|trabajos?|salari\w*|jobs?|hir(e|es|ed|ing))\b/i;
-const EMAIL = /[^\s@]+@[^\s@]+\.[^\s@]+/;
+const EMAIL = /[^\s@<>()"',;:]+@[^\s@<>()"',;:]+\.[a-z]{2,}/i;
 
 /** Preguntas que suenan a oportunidad laboral o que dejan un email */
 export function isHotQuestion(question: string): boolean {
@@ -173,16 +173,19 @@ export async function notifyChat({ sessionId, firstInClient, question, answer, v
     const qa = [`❓ ${escapeHtml(question)}`, `🤖 ${escapeHtml(truncate(answer, MAX_ANSWER_CHARS) || "(sin respuesta)")}`];
     const visitorLine = `📍 ${escapeHtml(visitor.location)} · 📱 ${escapeHtml(visitor.device)} · 🔗 ${escapeHtml(visitor.origin)}`;
     const fire = hot ? "🔥 " : "";
+    // El visitante ha dejado su email en el chat: se destaca en una línea propia
+    const email = question.match(EMAIL)?.[0];
+    const contactLine = email ? [`📇 Contacto dejado: ${escapeHtml(email)}`] : [];
 
     let text: string;
     if (threadId) {
       // Seguimiento dentro del hilo: solo pregunta y respuesta
-      text = [`${fire}↪️ Seguimiento`, ...qa].join("\n");
+      text = [`${fire}↪️ Seguimiento`, ...contactLine, ...qa].join("\n");
     } else {
       const title = isNew ? "💬 Nueva conversación" : "💬 Seguimiento";
       // Sin Redis, el inicio del ID permite agrupar a ojo los avisos de una misma persona
       const id = redis ? "" : ` · <code>${sessionId.slice(0, 8)}</code>`;
-      text = [`${fire}${title}${id}`, visitorLine, ...qa].join("\n");
+      text = [`${fire}${title}${id}`, visitorLine, ...contactLine, ...qa].join("\n");
     }
 
     const message = await sendTelegram({
