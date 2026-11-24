@@ -39,7 +39,7 @@ export function About({ about, photoSrc }: AboutProps) {
             </div>
           </div>
 
-          <ul className="mt-8 grid gap-3 sm:grid-cols-3">
+          <ul className={`mt-8 grid gap-3 ${about.highlights.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}>
             {about.highlights.map((highlight) => (
               <li key={highlight.label} className="rounded-2xl bg-white/10 px-4 py-4 text-center">
                 <p className="font-display text-xl font-medium text-fg sm:text-2xl">{highlight.value}</p>

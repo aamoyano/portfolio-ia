@@ -146,7 +146,6 @@ const es: Content = {
     highlights: [
       { value: "+1 año", label: "con webs en producción" },
       { value: "Máster oficial", label: "en IA y Big Data" },
-      { value: "Disponibilidad", label: "inmediata" },
     ],
     photoAlt: "Retrato de Antonio Álvarez Moyano",
   },
