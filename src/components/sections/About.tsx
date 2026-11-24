@@ -13,7 +13,7 @@ interface AboutProps {
 /** "Sobre mí": foto, texto y tres cifras destacadas (`about` en profile.ts). */
 export function About({ about, photoSrc }: AboutProps) {
   return (
-    <Section id="sobre-mi">
+    <Section id="sobre-mi" className="pt-20 sm:pt-28">
       <SectionTitle id="sobre-mi" title={about.eyebrow} />
 
       <Reveal>
