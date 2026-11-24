@@ -180,9 +180,7 @@ export interface Content {
     subtitle: string;
     typeLabels: Record<TimelineType, string>;
     currentLabel: string;
-    /** Versión resumida que se muestra en la web (3-4 líneas) */
-    summary: { title: string; place: string; period: string; type: TimelineType }[];
-    /** Detalle completo: base de conocimiento del chatbot */
+    /** Trayectoria completa: se muestra en la web y la lee el chatbot */
     items: TimelineItem[];
   };
 
