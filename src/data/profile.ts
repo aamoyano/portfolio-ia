@@ -276,7 +276,7 @@ const es: Content = {
     items: [
       {
         type: "education",
-        title: "Máster FP oficial en Inteligencia Artificial y Big Data",
+        title: "Máster oficial en Inteligencia Artificial y Big Data",
         organization: "Cámara de Comercio de Madrid",
         start: "2026-09",
         period: "2026 – 2027",
@@ -310,7 +310,7 @@ const es: Content = {
         start: "2025-04",
         period: "abr – jun 2025",
         description:
-          "Contrato de prácticas del ciclo de Desarrollo de Aplicaciones Web: soluciones digitales y diseño web para empresas en WordPress, y soporte técnico.",
+          "Contrato de prácticas del grado superior de Desarrollo de Aplicaciones Web: soluciones digitales y diseño web para empresas en WordPress, y soporte técnico.",
       },
       {
         type: "education",
@@ -329,7 +329,7 @@ const es: Content = {
         start: "2023-04",
         period: "abr – jun 2023",
         description:
-          "Prácticas del ciclo de Marketing y Publicidad: informes de resultados de publicidad (CTR, CPC, impresiones y conversiones), seguimiento de campañas y verificación y supervisión de resultados.",
+          "Prácticas del grado superior de Marketing y Publicidad: informes de resultados de publicidad (CTR, CPC, impresiones y conversiones), seguimiento de campañas y verificación y supervisión de resultados.",
         location: "Córdoba",
       },
       {
@@ -363,14 +363,14 @@ const es: Content = {
   assistant: {
     experienceSummary: [
       "Más de un año de experiencia profesional como desarrollador web (agosto 2025 – septiembre 2026).",
-      "Durante gran parte de ese tiempo compaginó dos empresas: Xpandex, como autónomo, y APPSUR.",
+      "Durante gran parte de ese tiempo compaginó dos empresas: Xpandex y APPSUR.",
       "Trabajó con clientes reales y webs en producción, desde la reunión inicial hasta la solución.",
       "Antes hizo prácticas en desarrollo web (Nogomet Comunicación) y en marketing digital (Diario Córdoba).",
     ],
     motivation:
       "Da el salto a la IA para mantenerse actualizado en un sector que avanza muy rápido y poder desarrollar nuevas soluciones digitales. Le atraen especialmente los datos y las automatizaciones, y está convencido de que la IA puede ser una herramienta de gran utilidad para las empresas.",
     strengths: [
-      "Autonomía: ha trabajado en remoto como autónomo, gestionando proyectos con clientes finales.",
+      "Autonomía: ha gestionado proyectos en remoto con clientes finales, de principio a fin.",
       "Aprende rápido y se adapta con facilidad a nuevos entornos.",
       "Buenas relaciones sociales y trato con clientes: reuniones para entender sus necesidades y proponer soluciones.",
       "Compromiso y muchas ganas de desarrollar su carrera profesional.",
@@ -380,7 +380,7 @@ const es: Content = {
       "Se adapta a cualquier rol relacionado con la IA y el Big Data; le gustan especialmente las automatizaciones, el desarrollo de aplicaciones con IA y los datos.",
       "Modalidad: presencial, híbrido o remoto.",
       "Ubicación: Madrid y localidades cercanas; no se trasladaría lejos.",
-      "Horario: disponibilidad completa por las mañanas y parcial por la tarde (aproximadamente hasta las 16:00), porque el máster es presencial de tarde.",
+      "Horario: disponibilidad completa por las mañanas y parcial por las tardes, porque el máster es presencial de tarde.",
       "Incorporación inmediata.",
       "Prácticas: no necesitan convenio con la Cámara de Comercio, aunque es posible si la empresa lo prefiere. No exige una duración concreta y está abierto a hablar de la remuneración.",
     ],
