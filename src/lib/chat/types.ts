@@ -10,6 +10,10 @@ export interface ChatMessage {
 
 export interface ChatRequest {
   messages: ChatMessage[];
+  /** UUID de la conversación, generado en el navegador (agrupa los avisos) */
+  sessionId?: string;
+  /** `document.referrer` al abrir el chat: de qué web llega el visitante */
+  referrer?: string;
 }
 
 /** Errores: el endpoint responde JSON con este código; el éxito es texto en streaming. */

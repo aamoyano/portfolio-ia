@@ -137,6 +137,8 @@ Copia `.env.example` como `.env.local` y rellena los valores. En Vercel se confi
 | `CHAT_MODEL` | Opcional: cambia el modelo (por defecto Claude Sonnet 5.5). |
 | `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` | Límite de uso compartido entre instancias (recomendado en producción). |
 | `NEXT_PUBLIC_SITE_URL` | Tu dominio propio, para metadatos y sitemap. |
+| `TELEGRAM_BOT_TOKEN` / `TELEGRAM_CHAT_ID` | Opcional: avisos en Telegram cuando alguien usa el chat (ver más abajo). |
+| `NOTIFY_SECRET` | Opcional: palabra secreta para excluir tus propias pruebas de los avisos. |
 
 ## Chatbot
 
@@ -185,6 +187,51 @@ Cuando haya más contenido (artículos, documentación de proyectos, el CV compl
 2. Guardarlos en una **base vectorial** (pgvector en Supabase/Neon, Upstash Vector…).
 3. En cada pregunta, recuperar los fragmentos más relevantes y pasarlos como contexto al LLM.
 4. Citar la fuente de cada respuesta (proyecto, experiencia…) y registrar preguntas para mejorar el contenido.
+
+## Avisos en Telegram
+
+Cada vez que alguien usa el chatbot, te llega un aviso por Telegram con la pregunta, la respuesta (recortada)
+y datos básicos del visitante: ciudad y país (cabeceras de Vercel), dispositivo, navegador y de qué web viene.
+**Nunca se envía ni se guarda la IP.** El código está en `src/lib/chat/notify.ts` y se ejecuta con `after()`
+cuando ya ha terminado la respuesta, así que nunca retrasa ni rompe el chat.
+
+```
+💬 Nueva conversación
+📍 Madrid, ES · 📱 iPhone, Safari · 🔗 LinkedIn
+❓ ¿Qué experiencia tiene?
+🤖 Antonio tiene más de un año de experiencia…
+```
+
+- Si la pregunta habla de **oferta, entrevista, contratar, puesto, trabajo, salario, job, hire** o incluye un email,
+  el aviso empieza con 🔥 y suena siempre.
+- Los mensajes siguientes de la misma conversación llegan **en silencio** (salvo los 🔥).
+
+### Variables de entorno
+
+| Variable | Para qué |
+| --- | --- |
+| `TELEGRAM_BOT_TOKEN` | Token del bot. Sin él (o sin el chat ID) no se envía nada y el chat funciona igual. |
+| `TELEGRAM_CHAT_ID` | Tu ID de usuario de Telegram: a quién escribe el bot. |
+| `NOTIFY_SECRET` | Palabra secreta. Visita la web con `?yo=<NOTIFY_SECRET>` y ese navegador queda excluido de los avisos durante un año (cookie `no_notify`). Sin esta variable, la exclusión está desactivada. |
+| `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` | Opcionales, pero necesarias para los **hilos**. |
+
+### Cómo obtener el token y el chat ID
+
+1. En Telegram, habla con [@BotFather](https://t.me/BotFather), envía `/newbot` y sigue los pasos: te da el **token**.
+2. Abre tu bot y pulsa **Start** (si no, el bot no puede escribirte).
+3. Para tu **chat ID**, escribe a [@userinfobot](https://t.me/userinfobot); también aparece en
+   `https://api.telegram.org/bot<TOKEN>/getUpdates` después de escribirle algo a tu bot.
+4. Añade las variables en `.env.local` y en Vercel (*Settings → Environment Variables*) y vuelve a desplegar.
+
+### Con y sin Redis
+
+- **Con Upstash Redis**: los mensajes de una conversación llegan como respuesta al primer aviso, formando un hilo.
+  El ID del primer aviso se guarda en la clave `notify:{sessionId}` durante 24 horas.
+- **Sin Redis**: cada mensaje llega como aviso independiente con los 8 primeros caracteres del ID de la
+  conversación, para agruparlos a ojo.
+
+El ID de la conversación lo genera el navegador (`crypto.randomUUID`) y se guarda en `sessionStorage`:
+dura lo que la pestaña abierta.
 
 ---
 

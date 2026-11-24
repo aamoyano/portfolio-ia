@@ -8,6 +8,30 @@ import type { Content } from "@/data/types";
 import { CHAT_LIMITS, type ChatErrorCode, type ChatMessage } from "@/lib/chat/types";
 import { ChatPanel, SuggestionList } from "./ChatPanel";
 
+const SESSION_KEY = "chat-session";
+
+/**
+ * ID de la conversación (para agrupar los avisos en Telegram) y web de la que
+ * viene el visitante. Se guardan en sessionStorage: duran lo que la pestaña.
+ * El Referer de la petición a /api/chat es la propia web, por eso se envía
+ * `document.referrer` desde aquí.
+ */
+function getChatSession(): { sessionId: string; referrer: string } {
+  try {
+    const saved = JSON.parse(sessionStorage.getItem(SESSION_KEY) ?? "null");
+    if (saved?.sessionId) return saved;
+  } catch {
+    // sessionStorage bloqueado o JSON corrupto: se crea uno nuevo
+  }
+  const session = { sessionId: crypto.randomUUID(), referrer: document.referrer };
+  try {
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
+  } catch {
+    // Sin almacenamiento: cada mensaje contará como conversación nueva
+  }
+  return session;
+}
+
 interface ChatWidgetProps {
   chat: Content["chat"];
   /** true cuando `siteConfig.chatEnabled` está activo y hay API key en el servidor */
@@ -46,6 +70,7 @@ export function ChatWidget({ chat, enabled }: ChatWidgetProps) {
   }, [showNotice]);
 
   const openPanel = () => {
+    getChatSession();
     setPortalReady(true);
     setOpen(true);
   };
@@ -97,7 +122,7 @@ export function ChatWidget({ chat, enabled }: ChatWidgetProps) {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: history }),
+        body: JSON.stringify({ messages: history, ...getChatSession() }),
         signal: controller.signal,
       });
 

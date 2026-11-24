@@ -7,11 +7,22 @@
  *
  * El proveedor (OpenRouter o Anthropic) y el modelo se eligen en
  * `src/lib/chat/providers.ts` según las variables de entorno.
+ *
+ * Al terminar cada respuesta se avisa a Antonio por Telegram
+ * (`src/lib/chat/notify.ts`), sin retrasar ni afectar al chat.
  */
 
+import { after } from "next/server";
 import { siteConfig } from "@/data/profile";
 import { getContent } from "@/i18n";
 import { getChatProvider, ProviderError, streamAnswer } from "@/lib/chat/providers";
+import {
+  getVisitorInfo,
+  hasNoNotifyCookie,
+  isValidSessionId,
+  notificationsEnabled,
+  notifyChat,
+} from "@/lib/chat/notify";
 import { checkRateLimit, getClientIp } from "@/lib/chat/rate-limit";
 import { CHAT_LIMITS, type ChatErrorCode, type ChatMessage } from "@/lib/chat/types";
 
@@ -63,12 +74,29 @@ export async function POST(request: Request) {
   const abort = new AbortController();
   request.signal.addEventListener("abort", () => abort.abort());
 
+  // Respuesta completa del bot, disponible cuando termina el streaming
+  let resolveAnswer: (answer: string) => void = () => {};
+  const fullAnswer = new Promise<string>((resolve) => (resolveAnswer = resolve));
+
+  const sessionId = (body as { sessionId?: unknown }).sessionId;
+  if (notificationsEnabled() && isValidSessionId(sessionId) && !hasNoNotifyCookie(request)) {
+    const visitor = getVisitorInfo(request, (body as { referrer?: unknown }).referrer);
+    const question = messages.at(-1)!.content;
+    const firstInClient = messages.length === 1;
+    // Se ejecuta cuando la respuesta ya se ha enviado entera al visitante
+    after(async () => {
+      await notifyChat({ sessionId, firstInClient, question, answer: await fullAnswer, visitor });
+    });
+  }
+
   const responseBody = new ReadableStream<Uint8Array>({
     async start(controller) {
       let sentText = false;
+      let answer = "";
       try {
         for await (const text of streamAnswer(provider, messages, abort.signal)) {
           sentText = true;
+          answer += text;
           controller.enqueue(encoder.encode(text));
         }
         // Respuesta vacía (p. ej. pregunta rechazada por el modelo)
@@ -79,6 +107,7 @@ export async function POST(request: Request) {
           controller.enqueue(encoder.encode(sentText ? `\n\n${errors.generic}` : errors.generic));
         }
       } finally {
+        resolveAnswer(answer || errors.generic);
         controller.close();
       }
     },

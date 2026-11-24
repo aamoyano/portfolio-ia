@@ -125,7 +125,7 @@ const es: Content = {
     resume: "Continuar la conversación",
     sendLabel: "Enviar pregunta",
     typing: "Escribiendo…",
-    disclaimer: "Respuestas generadas por IA a partir de mi perfil. Pueden contener errores.",
+    disclaimer: "Respuestas generadas por IA a partir de mi perfil. Pueden contener errores. Las conversaciones se guardan para mejorar el asistente.",
     reset: "Nueva conversación",
     you: "Tú",
     assistant: "Asistente",
