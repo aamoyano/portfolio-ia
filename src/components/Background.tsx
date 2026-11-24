@@ -34,6 +34,20 @@ export function Background() {
         aria-hidden
         className="fixed inset-x-0 top-0 -z-[5] h-[env(safe-area-inset-top)] min-h-px bg-[var(--color-edge-top)]"
       />
+
+      {/*
+        En móviles y tabletas, la foto se funde con el color de las barras de
+        Safari: así no se nota el corte entre la barra (color sólido) y la foto.
+        La franja inferior va pegada al borde visible (encima de la barra).
+      */}
+      <div
+        aria-hidden
+        className="fixed inset-x-0 top-[env(safe-area-inset-top)] -z-[5] h-32 bg-[linear-gradient(180deg,var(--color-edge-top)_0%,transparent_100%)] lg:hidden"
+      />
+      <div
+        aria-hidden
+        className="fixed inset-x-0 bottom-0 -z-[5] h-[calc(8rem+env(safe-area-inset-bottom))] bg-[linear-gradient(0deg,var(--color-edge-bottom)_0%,var(--color-edge-bottom)_env(safe-area-inset-bottom),transparent_100%)] lg:hidden"
+      />
     </>
   );
 }
