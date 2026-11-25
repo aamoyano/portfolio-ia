@@ -105,7 +105,7 @@ export function ChatPanel({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.25 }}
-      className="fixed inset-0 z-[80] flex justify-center bg-[rgb(20_25_55/0.35)] backdrop-blur-xl"
+      className="fixed inset-0 z-[80] flex justify-center bg-[rgb(20_25_55/0.35)] backdrop-blur-xl max-sm:bg-[rgb(150_112_92/0.28)] max-sm:backdrop-blur-2xl max-sm:backdrop-brightness-110"
     >
       {/*
         Móvil: los mismos degradados cálidos que la web (Background.tsx), para que
