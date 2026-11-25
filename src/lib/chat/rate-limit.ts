@@ -1,4 +1,5 @@
 import "server-only";
+import { createHash } from "node:crypto";
 import { Ratelimit } from "@upstash/ratelimit";
 import { redis } from "@/lib/redis";
 
@@ -43,7 +44,9 @@ function memoryLimit(key: string): boolean {
 /** Devuelve `true` si la IP aún puede preguntar. */
 export async function checkRateLimit(ip: string): Promise<boolean> {
   if (!limiters) return memoryLimit(ip);
-  const results = await Promise.all(limiters.map((limiter) => limiter.limit(ip)));
+  // En Redis no se guarda la IP: solo un hash irreversible que identifica al visitante
+  const key = createHash("sha256").update(ip).digest("hex").slice(0, 32);
+  const results = await Promise.all(limiters.map((limiter) => limiter.limit(key)));
   return results.every((result) => result.success);
 }
 
