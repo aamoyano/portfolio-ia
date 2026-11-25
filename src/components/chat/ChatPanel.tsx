@@ -37,20 +37,50 @@ export function ChatPanel({
 }: ChatPanelProps) {
   const titleId = useId();
   const inputId = useId();
+  const dialogRef = useRef<HTMLDivElement>(null);
   const logRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Bloquea el scroll de la web y cierra con Escape
+  // Bloquea el scroll de la web y cierra con Escape.
+  // En iOS no basta con overflow: hidden, así que el body se fija en su posición
+  // y al cerrar se vuelve exactamente al mismo punto de la página.
   useEffect(() => {
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const { body, documentElement: html } = document;
+    const scrollY = window.scrollY;
+    const previous = body.getAttribute("style") ?? "";
+    Object.assign(body.style, { overflow: "hidden", position: "fixed", top: `-${scrollY}px`, left: "0", right: "0" });
     const onKey = (event: KeyboardEvent) => event.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
     return () => {
-      document.body.style.overflow = previous;
+      body.setAttribute("style", previous);
+      const behavior = html.style.scrollBehavior;
+      html.style.scrollBehavior = "auto";
+      window.scrollTo(0, scrollY);
+      html.style.scrollBehavior = behavior;
       window.removeEventListener("keydown", onKey);
     };
   }, [onClose]);
+
+  // Móvil: con el teclado abierto, el chat se ajusta exactamente al área visible
+  // (visualViewport). Así la cabecera y el degradado de arriba siguen en su sitio
+  // y no asoma la web por debajo.
+  useEffect(() => {
+    const viewport = window.visualViewport;
+    const dialog = dialogRef.current;
+    if (!viewport || !dialog || !window.matchMedia("(max-width: 639px)").matches) return;
+    const fit = () => {
+      dialog.style.top = `${viewport.offsetTop}px`;
+      dialog.style.height = `${viewport.height}px`;
+      dialog.style.bottom = "auto";
+    };
+    fit();
+    viewport.addEventListener("resize", fit);
+    viewport.addEventListener("scroll", fit);
+    return () => {
+      viewport.removeEventListener("resize", fit);
+      viewport.removeEventListener("scroll", fit);
+    };
+  }, []);
 
   // En escritorio, el cursor vuelve al campo al terminar cada respuesta
   useEffect(() => {
@@ -67,6 +97,7 @@ export function ChatPanel({
 
   return (
     <motion.div
+      ref={dialogRef}
       role="dialog"
       aria-modal="true"
       aria-labelledby={titleId}
@@ -100,7 +131,7 @@ export function ChatPanel({
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 16, scale: 0.98 }}
         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-        className="relative flex h-[100dvh] w-full max-w-3xl pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)] sm:p-6"
+        className="relative flex h-full w-full max-w-3xl pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)] sm:p-6"
       >
         {/*
           En el móvil ocupa toda la pantalla, sin marco ni vidrio propio: el fondo es la
@@ -141,7 +172,7 @@ export function ChatPanel({
           </header>
 
           {/* Mensajes */}
-          <div ref={logRef} role="log" aria-live="polite" className="flex-1 overflow-y-auto px-4 py-6 sm:px-8">
+          <div ref={logRef} role="log" aria-live="polite" className="flex-1 overflow-y-auto overscroll-contain px-4 py-6 sm:px-8">
             {messages.length === 0 ? (
               <div className="flex h-full flex-col items-center justify-center gap-5 text-center">
                 <p className="text-muted">{chat.placeholder}</p>
