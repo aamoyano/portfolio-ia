@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>CV Antonio Álvarez Moyano</title>
+<!--
+  Fuente del CV (public/cv-antonio-alvarez.pdf).
+  Para regenerar el PDF:
+    "C:\Program Files\Google\Chrome\Application\chrome.exe" --headless --no-pdf-header-footer
+      --print-to-pdf=public/cv-antonio-alvarez.pdf cv/cv.html
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 595.3pt; height: 841.9pt; }
+  body {
+    font-family: "Inter", sans-serif;
+    color: #1b2230;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    display: flex;
+    overflow: hidden;
+  }
+  .side { width: 186.8pt; height: 100%; background: #f1f4f8; padding: 38.6pt 20pt 0 25.5pt; }
+  .main { flex: 1; padding: 36pt 34.3pt 0 28.6pt; }
+
+  /* Foto */
+  .photo { width: 109.5pt; height: 109.5pt; margin-left: 16.1pt; border-radius: 50%; background: #0e7c86; padding: 2.6pt; }
+  .photo div { width: 100%; height: 100%; border-radius: 50%; border: 3pt solid #fff; overflow: hidden; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* Cabeceras de la columna izquierda */
+  .side h2 { font-family: Arial, "Liberation Sans", sans-serif; font-weight: 700; font-size: 9pt; letter-spacing: 1.45pt; color: #0e7c86; margin: 19pt 0 9.5pt; }
+  .side h2.first { margin-top: 19.5pt; }
+  .contact li { list-style: none; display: flex; align-items: flex-start; gap: 7.5pt; font-size: 8.5pt; line-height: 12.7pt; margin-bottom: 6pt; }
+  .contact svg { width: 9pt; height: 9pt; flex: none; margin-top: 1.9pt; stroke: #0e7c86; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .group { font-size: 7.8pt; font-weight: 600; color: #4a5568; margin: 0 0 6pt; }
+  .tags { display: flex; flex-wrap: wrap; gap: 5.3pt; margin-bottom: 10.5pt; max-width: 136pt; }
+  .tags span { font-size: 8.2pt; line-height: 1; padding: 4.1pt 6.6pt; background: #fff; border: 0.75pt solid #d3dae4; border-radius: 4.5pt; }
+  .contact a { color: inherit; text-decoration: none; }
+  .langs li { list-style: none; display: flex; justify-content: space-between; font-size: 8.6pt; line-height: 15.7pt; width: 141.7pt; }
+  .langs span { color: #5a6475; }
+
+  /* Columna derecha */
+  h1 { font-family: Arial, "Liberation Sans", sans-serif; font-weight: 700; font-size: 24pt; line-height: 30pt; letter-spacing: -0.3pt; }
+  h1 b { color: #0e7c86; font-weight: inherit; }
+  .role { font-size: 10.6pt; font-weight: 600; color: #0e7c86; margin-top: 4.5pt; }
+  .summary { font-size: 9.19pt; line-height: 13.5pt; color: #3a4354; margin-top: 15.5pt; max-width: 338pt; }
+  .main h2 { font-family: Arial, "Liberation Sans", sans-serif; font-weight: 700; font-size: 10.5pt; letter-spacing: 1.8pt; display: flex; align-items: center; gap: 10pt; margin: 17pt 0 11pt; }
+  .main h2::after { content: ""; flex: 1; height: 0.8pt; background: #d3dae4; }
+  .entry { position: relative; padding-left: 14.2pt; margin-bottom: 11.5pt; }
+  .entry::before { content: ""; position: absolute; left: -0.2pt; top: 3.6pt; width: 6pt; height: 6pt; border-radius: 50%; background: #0e7c86; }
+  .entry.past::before { background: #fff; border: 0.75pt solid #0e7c86; width: 5.3pt; height: 5.3pt; left: 0.2pt; }
+  .head { display: flex; justify-content: space-between; align-items: baseline; }
+  .title { font-size: 9.8pt; font-weight: 600; }
+  .title span { font-weight: 400; color: #3a4354; }
+  .date { font-size: 8.2pt; color: #5a6475; white-space: nowrap; }
+  .org { font-size: 9.3pt; color: #3a4354; margin-top: 1.5pt; }
+  .entry ul { margin-top: 4pt; }
+  .entry li { list-style: none; position: relative; padding-left: 11.3pt; font-size: 9.3pt; line-height: 13.5pt; color: #3a4354; margin-bottom: 1.5pt; }
+  .entry li::before { content: ""; position: absolute; left: -0.1pt; top: 5.4pt; width: 3pt; height: 3pt; border-radius: 50%; background: #3a4354; }
+  .box { background: #e7f4f5; border-radius: 4pt; padding: 6.3pt 8.6pt 7pt; margin-top: 7pt; font-size: 8.7pt; line-height: 12.75pt; color: #1f3d41; }
+</style>
+</head>
+<body>
+  <aside class="side">
+    <div class="photo"><div><img src="foto-cv.png" alt="Antonio Álvarez Moyano" /></div></div>
+
+    <h2 class="first">CONTACTO</h2>
+    <ul class="contact">
+      <li><svg viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Madrid</li>
+      <li><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>+34 637 56 41 50</li>
+      <li><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg><a href="mailto:aamoyano01@gmail.com">aamoyano01@gmail.com</a></li>
+      <li><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M8 11v5M8 8v.01M12 16v-5M16 16v-3a2 2 0 0 0-4 0"/></svg><a href="https://www.linkedin.com/in/antonio-alvarez-moyano">linkedin.com/in/antonio-<br />alvarez-moyano</a></li>
+      <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z"/></svg><a href="https://amoyano.es">amoyano.es</a></li>
+    </ul>
+
+    <h2>COMPETENCIAS</h2>
+    <p class="group">Inteligencia artificial</p>
+    <div class="tags">
+      <span>APIs de LLMs</span><span>OpenAI · Gemini · Claude</span><span>Agentes de IA</span>
+      <span>Salidas estructuradas</span><span>Tool calling</span><span>LangChain</span>
+      <span>Machine Learning</span><span>n8n</span>
+    </div>
+    <p class="group">Programación y datos</p>
+    <div class="tags">
+      <span>Python</span><span>SQL</span><span>MySQL</span><span>PHP</span>
+      <span>JavaScript</span><span>HTML/CSS</span><span>Git · GitHub</span>
+    </div>
+
+    <h2>IDIOMAS</h2>
+    <ul class="langs">
+      <li>Español <span>Nativo</span></li>
+      <li>Inglés <span>B2 (EF SET)</span></li>
+    </ul>
+  </aside>
+
+  <main class="main">
+    <h1>Antonio Álvarez Moyano<b>.</b></h1>
+    <p class="role">Inteligencia Artificial y Big Data · Agentes de IA y LLMs</p>
+    <p class="summary">
+      Perfil técnico especializado en inteligencia artificial y datos con el Máster FP oficial en IA y Big Data,
+      donde desarrollo agentes de IA con Python y APIs de LLMs. Aporto experiencia previa como desarrollador en
+      entornos de producción y visión de negocio para aplicar la IA a problemas reales de empresa.
+    </p>
+
+    <h2>EXPERIENCIA</h2>
+    <div class="entry">
+      <div class="head"><p class="title">Web Developer <span>· APPSUR</span></p><p class="date">Dic 2025 – Jul 2026</p></div>
+      <ul>
+        <li>Desarrollo y personalización de soluciones web a medida para clientes, con foco en rendimiento.</li>
+        <li>Resolución de incidencias en producción y ajustes funcionales con JavaScript, PHP y MySQL.</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="head"><p class="title">Web Developer (autónomo) <span>· Xpandex</span></p><p class="date">Ago 2025 – Sep 2026</p></div>
+      <ul>
+        <li>Mantenimiento y mejora de webs en producción orientadas a captación digital, para clientes de varios sectores.</li>
+        <li>Optimización responsive y diagnóstico de incidencias de forma independiente, gestionando prioridades.</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="head"><p class="title">Web Developer <span>· Nogomet Comunicación</span></p><p class="date">Abr 2025 – Jun 2025</p></div>
+      <ul><li>Personalización de sitios web y soporte técnico a clientes.</li></ul>
+    </div>
+    <div class="entry">
+      <div class="head"><p class="title">Marketing Digital <span>· Diario Córdoba</span></p><p class="date">Abr 2023 – Jun 2023</p></div>
+      <ul><li>Análisis de informes de rendimiento digital (CTR, CPC, impresiones y conversión) para apoyar decisiones de campaña.</li></ul>
+    </div>
+
+    <h2>FORMACIÓN</h2>
+    <div class="entry">
+      <div class="head"><p class="title">Máster FP en Inteligencia Artificial y Big Data</p><p class="date">2026 – actualidad</p></div>
+      <p class="org">Cámara de Comercio de Madrid · Título oficial</p>
+      <p class="box">Integración de LLMs (OpenAI, Gemini, Claude), salidas estructuradas, uso de herramientas y agentes de IA con Python. También Machine Learning y Big Data.</p>
+    </div>
+    <div class="entry past">
+      <div class="head"><p class="title">Técnico Superior en Desarrollo de Aplicaciones Web</p><p class="date">2023 – 2025</p></div>
+      <p class="org">Instituto MEDAC</p>
+    </div>
+    <div class="entry past">
+      <div class="head"><p class="title">Técnico Superior en Marketing y Publicidad</p><p class="date">2021 – 2023</p></div>
+      <p class="org">Instituto MEDAC</p>
+    </div>
+  </main>
+</body>
+</html>

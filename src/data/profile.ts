@@ -75,7 +75,7 @@ const es: Content = {
     availability: "Disponibilidad inmediata",
     languages: [
       { name: "Español", level: "Nativo" },
-      { name: "Inglés", level: "Intermedio, conversacional (lo usa en reuniones con clientes; certificado oficial en preparación)" },
+      { name: "Inglés", level: "B2, certificado con el EF SET (lo usa en reuniones con clientes)" },
     ],
   },
 
@@ -376,7 +376,7 @@ const es: Content = {
       learning: ["LangChain", "Pandas", "NumPy", "n8n", "MongoDB", "Docker"],
     },
     certifications:
-      "Por ahora no tiene certificaciones adicionales, pero está preparándolas.",
+      "Certificado de inglés B2 (EF SET). Por ahora no tiene otras certificaciones, pero está preparándolas.",
     projects: [
       "Durante su experiencia profesional ha trabajado en muchos proyectos web para clientes, desde la reunión inicial hasta la web en producción.",
       "Además, tiene dos proyectos propios con IA:",
@@ -395,7 +395,7 @@ const es: Content = {
       {
         topic: "Idiomas o inglés (solo si preguntan por idiomas)",
         answer:
-          "Español nativo. Inglés intermedio y conversacional: lo usa en reuniones con clientes. Está preparando el certificado oficial.",
+          "Español nativo. Inglés de nivel B2, certificado con el EF SET (EF Standard English Test); lo usa en reuniones con clientes.",
       },
       {
         topic: "Aficiones",
