@@ -1,5 +1,5 @@
 import "server-only";
-import { Redis } from "@upstash/redis";
+import { redis } from "@/lib/redis";
 import { NO_NOTIFY_COOKIE } from "./notify-cookie";
 
 /**
@@ -15,8 +15,6 @@ import { NO_NOTIFY_COOKIE } from "./notify-cookie";
 const TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
-const redis =
-  process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN ? Redis.fromEnv() : null;
 
 /** El hilo de cada conversación se recuerda 24 horas */
 const THREAD_TTL_SECONDS = 24 * 60 * 60;

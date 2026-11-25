@@ -1,11 +1,11 @@
 import "server-only";
 import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis";
+import { redis } from "@/lib/redis";
 
 /**
  * Límite de uso por IP: 10 preguntas por minuto y 30 al día.
  *
- * - Con UPSTASH_REDIS_REST_URL y UPSTASH_REDIS_REST_TOKEN definidos,
+ * - Con Upstash Redis configurado (ver src/lib/redis.ts),
  *   el límite se comparte entre todas las instancias de Vercel.
  * - Sin ellas, se usa un contador en memoria. Sirve en local, pero en
  *   Vercel cada instancia lleva su propia cuenta: configura Upstash
@@ -14,11 +14,8 @@ import { Redis } from "@upstash/redis";
 const PER_MINUTE = 10;
 const PER_DAY = 30;
 
-const hasUpstash = Boolean(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN);
-
-const limiters = hasUpstash
+const limiters = redis
   ? (() => {
-      const redis = Redis.fromEnv();
       return [
         new Ratelimit({ redis, prefix: "chat:min", limiter: Ratelimit.slidingWindow(PER_MINUTE, "1 m") }),
         new Ratelimit({ redis, prefix: "chat:day", limiter: Ratelimit.fixedWindow(PER_DAY, "1 d") }),
