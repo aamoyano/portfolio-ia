@@ -162,7 +162,7 @@ Copia `.env.example` como `.env.local`. En Vercel se configuran en **Settings �
 | --- | --- | --- |
 | `OPENROUTER_API_KEY` o `ANTHROPIC_API_KEY` | Para el chat | Activa el asistente. Basta una; si están las dos, se usa OpenRouter. |
 | `CHAT_MODEL` | No | Cambia el modelo (ver tabla anterior). |
-| `UPSTASH_REDIS_REST_URL` · `UPSTASH_REDIS_REST_TOKEN` | Recomendada en producción | Límite de uso compartido entre todas las instancias de Vercel. |
+| `UPSTASH_REDIS_REST_URL` · `UPSTASH_REDIS_REST_TOKEN` (o `KV_REST_API_URL` · `KV_REST_API_TOKEN`, los que crea la integración de Vercel) | Recomendada en producción | Límite de uso compartido entre todas las instancias de Vercel. Guarda un hash de la IP, nunca la IP. |
 | `NEXT_PUBLIC_SITE_URL` | No | URL pública. En Vercel se usa el dominio de producción automáticamente. |
 
 > Pon un **límite de crédito** a tu clave de OpenRouter o Anthropic. Nunca subas `.env.local` al repositorio.
