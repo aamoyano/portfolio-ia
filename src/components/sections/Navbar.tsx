@@ -67,7 +67,7 @@ export function Navbar({ nav, a11y, initials, cvHref, cvFileName }: NavbarProps)
         visible || open ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-24 opacity-0",
       )}
     >
-      <div className="glass mx-auto flex h-14 max-w-[820px] items-center justify-between gap-4 rounded-full pl-6 pr-2 md:h-12 md:max-w-[640px] md:pl-5 md:pr-1.5">
+      <div className="glass mx-auto flex h-14 max-w-[820px] items-center justify-between gap-4 rounded-full pl-6 pr-2 md:h-12 md:max-w-[720px] md:pl-5 md:pr-1.5">
         <a
           href="#inicio"
           aria-label={nav.home}
