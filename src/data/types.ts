@@ -209,6 +209,8 @@ export interface Content {
     /** Por qué da el salto a la IA */
     motivation: string;
     strengths: string[];
+    /** Máster, intereses y proyectos actuales */
+    currentFocus: string[];
     /** Qué busca y en qué condiciones */
     workPreferences: string[];
     skills: {
