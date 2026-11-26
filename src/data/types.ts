@@ -224,6 +224,8 @@ export interface Content {
     projects: string[];
     /** Cómo está hecho este portfolio, para preguntas técnicas sobre él */
     portfolioTech: string[];
+    /** Cómo se está construyendo el sistema de reservas (en desarrollo) */
+    reservasTech: string[];
     /** Temas que el bot solo cuenta si se los preguntan explícitamente */
     onlyIfAsked: { topic: string; answer: string }[];
   };

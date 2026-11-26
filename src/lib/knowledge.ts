@@ -50,6 +50,9 @@ export function buildKnowledgeBase(locale?: Locale): string {
     "## Ficha técnica de este portfolio (para preguntas sobre cómo está hecho)",
     ...assistant.portfolioTech.map((p) => `- ${p}`),
     "",
+    "## Ficha técnica del sistema de reservas (en desarrollo)",
+    ...assistant.reservasTech.map((p) => `- ${p}`),
+    "",
     "## Trayectoria (de la más reciente a la más antigua)",
     ...[...timeline.items]
       .sort((a, b) => b.start.localeCompare(a.start))

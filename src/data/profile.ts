@@ -381,7 +381,7 @@ const es: Content = {
       "Durante su experiencia profesional ha trabajado en muchos proyectos web para clientes, desde la reunión inicial hasta la web en producción.",
       "Además, tiene dos proyectos propios con IA:",
       "Portfolio con asistente de IA (en desarrollo, publicado en https://amoyano.es): esta misma web, con un chatbot que responde sobre su perfil usando un LLM. Código público en https://github.com/aamoyano/portfolio-ia. Más detalles en la ficha técnica.",
-      "Sistema de reservas para una casa rural (en desarrollo): una web para gestionar las reservas, con un chatbot con IA que resuelve las dudas de los clientes. Python, LLMs, agentes y SQL.",
+      "Sistema de reservas para una casa rural (en desarrollo): una web para gestionar las reservas, con un agente de IA que resuelve las dudas de los clientes. Python, LLMs, agentes y SQL. Más detalles en su ficha técnica.",
     ],
     portfolioTech: [
       "Web: Next.js 16 (App Router) y TypeScript, con Tailwind CSS y Framer Motion. Diseño mobile-first con paneles de vidrio translúcido (liquid glass). Desplegada en Vercel con dominio propio (amoyano.es).",
@@ -392,6 +392,16 @@ const es: Content = {
       "Control de abuso y de coste: límite de 10 preguntas por minuto y 30 al día por visitante, compartido entre todos los servidores con Upstash Redis; tope de gasto mensual en la clave de la API; mensajes de 600 caracteres como máximo e historial limitado a los últimos 12 mensajes.",
       "Privacidad: no se guarda la IP de los visitantes; para el límite de uso solo se guarda un hash irreversible que caduca solo.",
       "El código es público en GitHub: https://github.com/aamoyano/portfolio-ia.",
+    ],
+    reservasTech: [
+      "Está en desarrollo: describe siempre cómo se está construyendo y qué incluirá, nunca como algo terminado o publicado.",
+      "Web pública de la casa rural: fotos, servicios y normas, calendario de disponibilidad, formulario de solicitud de reserva y precio calculado según las fechas (temporada, fines de semana y mínimo de noches).",
+      "Panel de administración para los propietarios: ver, aceptar o rechazar solicitudes, bloquear fechas y cambiar precios.",
+      "Asistente con IA que no solo responde dudas, sino que actúa como agente con herramientas (tool use): consultar disponibilidad, calcular el precio de unas fechas, dar información de la casa y crear una solicitud de reserva, siempre confirmando con el usuario antes.",
+      "Automatizaciones con n8n: aviso a los propietarios cuando llega una solicitud, email de confirmación al cliente y un resumen diario.",
+      "Tecnologías: backend y agente en Python con FastAPI y Claude con tool use; base de datos PostgreSQL con SQLAlchemy; web en Next.js; automatizaciones con n8n. Cuando esté listo se desplegará en Vercel (web) y Render o Railway (API).",
+      "Fases: datos y API con tests; web y panel; agente con su batería de pruebas; y por último n8n, despliegue y documentación.",
+      "La demo pública usará datos de ejemplo, sin datos reales de la casa.",
     ],
     onlyIfAsked: [
       {
