@@ -346,7 +346,7 @@ const es: Content = {
       "Antes hizo prácticas en desarrollo web (Nogomet Comunicación) y en marketing digital (Diario Córdoba), donde trabajaba sobre todo con el CRM del periódico y con Excel.",
     ],
     motivation:
-      "Da el salto a la IA para mantenerse actualizado en un sector que avanza muy rápido y poder desarrollar nuevas soluciones digitales. Le atraen especialmente los datos y las automatizaciones, y está convencido de que la IA puede ser una herramienta de gran utilidad para las empresas.",
+      "Da el salto a la IA para mantenerse actualizado en un sector que avanza muy rápido y poder desarrollar nuevas soluciones digitales. Le atraen especialmente los datos y las automatizaciones, y está convencido de que la IA puede ser una herramienta de gran utilidad para las empresas. Le motiva aprender cosas nuevas y ver que lo que construye resuelve un problema real, sobre todo cuando automatiza trabajo repetitivo o ayuda a tomar mejores decisiones con datos.",
     strengths: [
       "Autonomía: ha gestionado proyectos en remoto con clientes finales, de principio a fin.",
       "Aprende rápido y se adapta con facilidad a nuevos entornos.",
@@ -354,6 +354,7 @@ const es: Content = {
       "Compromiso y muchas ganas de desarrollar su carrera profesional.",
       "Organización y responsabilidad: compaginó dos trabajos a la vez, uno por la mañana y otro por la tarde.",
       "Le gusta trabajar en equipo y que cada miembro aporte su visión.",
+      "Quienes trabajan con él lo describirían como resolutivo, cercano y comprometido.",
       "Usa distintos agentes de IA en su día a día.",
     ],
     currentFocus: [
@@ -366,9 +367,10 @@ const es: Content = {
       "Se adapta a cualquier rol relacionado con la IA y el Big Data; le gustan especialmente las automatizaciones, el desarrollo de aplicaciones con IA y los datos.",
       "Está abierto a todo tipo de empresas relacionadas con la IA y los datos, y a distintos roles: automatizaciones y agentes de IA, gestión de datos, análisis, etc.",
       "No busca puestos de marketing digital sin relación con el desarrollo web o la IA.",
+      "Valora un equipo en el que cada persona aporte su visión, en el que pueda aprender de gente con más experiencia y en el que se trabaje con proyectos reales de IA y datos.",
       "Le interesa trabajar en inglés o en empresas internacionales.",
       "Modalidad: presencial, híbrido o remoto.",
-      "Vive en Madrid y su actividad actual está en Madrid y alrededores. A largo plazo está abierto a trasladarse a otra ciudad, o a trabajar en híbrido o en remoto.",
+      "Es de Córdoba y se trasladó a Madrid buscando oportunidades en tecnología y datos. Vive en Madrid y su actividad actual está en Madrid y alrededores. A largo plazo está abierto a trasladarse a otra ciudad, o a trabajar en híbrido o en remoto.",
       "Horario: disponibilidad completa por las mañanas y parcial por las tardes, porque el máster es presencial de tarde.",
       "Incorporación inmediata.",
       "Prácticas: el máster no incluye prácticas curriculares, pero la Cámara de Comercio puede firmar un convenio de prácticas extracurriculares si la empresa lo prefiere; no es imprescindible. No exige una duración concreta y está abierto a hablar de la remuneración.",
@@ -435,7 +437,7 @@ const es: Content = {
       },
       {
         topic: "Aficiones",
-        answer: "Le gusta jugar al ajedrez, tocar el piano y la naturaleza.",
+        answer: "Le gusta jugar al ajedrez, tocar el piano y la naturaleza, y hace deporte: pádel y gimnasio. No hay más detalles sobre sus aficiones.",
       },
       {
         topic: "Cómo se ha hecho este portfolio",
