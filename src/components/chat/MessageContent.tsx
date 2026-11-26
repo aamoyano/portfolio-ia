@@ -2,7 +2,8 @@ import { Fragment } from "react";
 
 /**
  * Pinta las respuestas del asistente con un formato mínimo y seguro
- * (sin HTML incrustado): párrafos, listas con "- " / "• " / "1." y **negrita**.
+ * (sin HTML incrustado): párrafos, listas con "- " / "• " / "1.", **negrita** y
+ * enlaces solo a direcciones permitidas (la web, el repositorio, LinkedIn y el email).
  * Funciona también con texto a medias mientras llega en streaming.
  */
 export function MessageContent({ text }: { text: string }) {
@@ -57,10 +58,40 @@ function renderInline(text: string) {
   return parts.map((part, index) =>
     index % 2 === 1 ? (
       <strong key={index} className="font-semibold text-white">
-        {part}
+        {linkify(part)}
       </strong>
     ) : (
-      <Fragment key={index}>{part.replace(/\*\*/g, "")}</Fragment>
+      <Fragment key={index}>{linkify(part.replace(/\*\*/g, ""))}</Fragment>
     ),
   );
+}
+
+/** Solo estas direcciones se convierten en enlaces; el resto se queda como texto */
+const ALLOWED_LINKS = [
+  /^https:\/\/(www\.)?amoyano\.es(\/[^\s]*)?$/,
+  /^https:\/\/github\.com\/aamoyano\/portfolio-ia(\/[^\s]*)?$/,
+  /^https:\/\/(www\.)?linkedin\.com\/in\/antonio-alvarez-moyano\/?$/,
+  /^aamoyano01@gmail\.com$/,
+];
+const LINK_CANDIDATE = /(https:\/\/[^\s)]+|aamoyano01@gmail\.com)/g;
+
+function linkify(text: string) {
+  return text.split(LINK_CANDIDATE).map((piece, index) => {
+    const clean = piece.replace(/[.,;:]+$/, "");
+    if (index % 2 === 0 || !ALLOWED_LINKS.some((re) => re.test(clean))) return piece;
+    const href = clean.includes("@") ? `mailto:${clean}` : clean;
+    return (
+      <Fragment key={index}>
+        <a
+          href={href}
+          target={href.startsWith("mailto:") ? undefined : "_blank"}
+          rel="noopener noreferrer"
+          className="underline decoration-white/40 underline-offset-2 transition-colors hover:decoration-white"
+        >
+          {clean.replace(/^https:\/\/(www\.)?/, "")}
+        </a>
+        {piece.slice(clean.length)}
+      </Fragment>
+    );
+  });
 }

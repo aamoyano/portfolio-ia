@@ -222,6 +222,8 @@ export interface Content {
     certifications: string;
     /** Cómo responder a "¿qué proyectos ha hecho?" (sustituye a la lista de la web) */
     projects: string[];
+    /** Cómo está hecho este portfolio, para preguntas técnicas sobre él */
+    portfolioTech: string[];
     /** Temas que el bot solo cuenta si se los preguntan explícitamente */
     onlyIfAsked: { topic: string; answer: string }[];
   };

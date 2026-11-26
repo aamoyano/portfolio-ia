@@ -380,8 +380,18 @@ const es: Content = {
     projects: [
       "Durante su experiencia profesional ha trabajado en muchos proyectos web para clientes, desde la reunión inicial hasta la web en producción.",
       "Además, tiene dos proyectos propios con IA:",
-      "Portfolio con asistente de IA (en desarrollo): esta misma web, con un chatbot que responde sobre su perfil usando un LLM. Next.js, TypeScript y API de LLMs.",
+      "Portfolio con asistente de IA (en desarrollo, publicado en https://amoyano.es): esta misma web, con un chatbot que responde sobre su perfil usando un LLM. Código público en https://github.com/aamoyano/portfolio-ia. Más detalles en la ficha técnica.",
       "Sistema de reservas para una casa rural (en desarrollo): una web para gestionar las reservas, con un chatbot con IA que resuelve las dudas de los clientes. Python, LLMs, agentes y SQL.",
+    ],
+    portfolioTech: [
+      "Web: Next.js 16 (App Router) y TypeScript, con Tailwind CSS y Framer Motion. Diseño mobile-first con paneles de vidrio translúcido (liquid glass). Desplegada en Vercel con dominio propio (amoyano.es).",
+      "Todo el contenido de la web está en un único archivo de datos, que también alimenta al asistente: si Antonio cambia su perfil, el asistente lo sabe en el siguiente despliegue.",
+      "Asistente: Claude Sonnet 5.5 (Anthropic) a través de OpenRouter, con las respuestas en streaming (se ven mientras se escriben).",
+      "El perfil completo va en el contexto del modelo (system prompt) con prompt caching para abaratar las preguntas. No usa RAG porque el contenido es pequeño y cabe entero en el contexto.",
+      "Instrucciones del asistente: tono, respuestas breves, no inventar nada que no esté en el perfil, temas permitidos y protección frente a intentos de manipulación (prompt injection).",
+      "Control de abuso y de coste: límite de 10 preguntas por minuto y 30 al día por visitante, compartido entre todos los servidores con Upstash Redis; tope de gasto mensual en la clave de la API; mensajes de 600 caracteres como máximo e historial limitado a los últimos 12 mensajes.",
+      "Privacidad: no se guarda la IP de los visitantes; para el límite de uso solo se guarda un hash irreversible que caduca solo.",
+      "El código es público en GitHub: https://github.com/aamoyano/portfolio-ia.",
     ],
     onlyIfAsked: [
       {
